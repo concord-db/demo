@@ -1,0 +1,65 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: cross-camera/package-lock.json
+
+      - name: Validate event-localization artifact
+        run: node --test tests/*.test.mjs
+        working-directory: event-localization
+
+      - name: Install cross-camera dependencies
+        run: npm ci
+        working-directory: cross-camera
+
+      - name: Test cross-camera demo
+        run: npm test
+        working-directory: cross-camera
+
+      - name: Build cross-camera demo
+        run: npm run build
+        working-directory: cross-camera
+
+      - name: Assemble combined site
+        run: |
+          mkdir -p site
+          cp .nojekyll index.html landing.css site/
+          cp -R event-localization site/event-localization
+          rm -rf site/event-localization/tests site/event-localization/scripts
+          cp -R cross-camera/dist site/cross-camera
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

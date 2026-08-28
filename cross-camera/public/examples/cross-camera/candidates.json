@@ -1,0 +1,668 @@
+[
+  {
+    "leftTrackId": "veh-20",
+    "rightTrackId": "veh-28",
+    "score": 0.9111949592939887,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-4",
+    "rightTrackId": "veh-3",
+    "score": 0.9091881328974148,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-5",
+    "rightTrackId": "veh-7",
+    "score": 0.9054222791578828,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-19",
+    "rightTrackId": "veh-22",
+    "score": 0.8935604166881397,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-18",
+    "rightTrackId": "veh-23",
+    "score": 0.8621495394387985,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-8",
+    "rightTrackId": "veh-14",
+    "score": 0.8580926744224155,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-6",
+    "rightTrackId": "veh-11",
+    "score": 0.8542719867675412,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-1",
+    "rightTrackId": "veh-4",
+    "score": 0.8485770863825516,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-9",
+    "rightTrackId": "veh-10",
+    "score": 0.8449244530356607,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-2",
+    "rightTrackId": "veh-1",
+    "score": 0.8373454628992413,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-3",
+    "rightTrackId": "veh-2",
+    "score": 0.8317100914639672,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-15",
+    "rightTrackId": "veh-24",
+    "score": 0.8184057283186698,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-9",
+    "rightTrackId": "veh-28",
+    "score": 0.8074782689422566,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-12",
+    "rightTrackId": "veh-16",
+    "score": 0.8029128891312,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-6",
+    "rightTrackId": "veh-2",
+    "score": 0.7968914162727008,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-17",
+    "rightTrackId": "veh-18",
+    "score": 0.7833206389990407,
+    "accepted": true
+  },
+  {
+    "leftTrackId": "veh-16",
+    "rightTrackId": "veh-28",
+    "score": 0.7757033242117811,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-9",
+    "rightTrackId": "veh-24",
+    "score": 0.7655684454541106,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-9",
+    "rightTrackId": "veh-7",
+    "score": 0.7596056715886764,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-3",
+    "rightTrackId": "veh-11",
+    "score": 0.7590647283819756,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-5",
+    "rightTrackId": "veh-28",
+    "score": 0.7583551300582576,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-6",
+    "rightTrackId": "veh-23",
+    "score": 0.7512933528268028,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-13",
+    "rightTrackId": "veh-23",
+    "score": 0.7351474391651995,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-6",
+    "rightTrackId": "veh-14",
+    "score": 0.7266266573275109,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-7",
+    "rightTrackId": "veh-10",
+    "score": 0.7227446339944864,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-5",
+    "rightTrackId": "veh-10",
+    "score": 0.7225974897357224,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-4",
+    "rightTrackId": "veh-14",
+    "score": 0.7206625095467777,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-3",
+    "rightTrackId": "veh-14",
+    "score": 0.7163489293616557,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-3",
+    "rightTrackId": "veh-23",
+    "score": 0.7130302923348374,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-4",
+    "rightTrackId": "veh-7",
+    "score": 0.7040306420958883,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-5",
+    "rightTrackId": "veh-23",
+    "score": 0.6997748284499535,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-20",
+    "rightTrackId": "veh-24",
+    "score": 0.6964221430476986,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-15",
+    "rightTrackId": "veh-28",
+    "score": 0.6962795732957812,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-5",
+    "rightTrackId": "veh-14",
+    "score": 0.6948958228948736,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-8",
+    "rightTrackId": "veh-2",
+    "score": 0.6937269707402766,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-5",
+    "rightTrackId": "veh-24",
+    "score": 0.6933297160782043,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-5",
+    "rightTrackId": "veh-11",
+    "score": 0.6874669418403061,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-5",
+    "rightTrackId": "veh-3",
+    "score": 0.687433357805744,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-7",
+    "rightTrackId": "veh-28",
+    "score": 0.6841436603600938,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-6",
+    "rightTrackId": "veh-28",
+    "score": 0.6838377580573535,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-9",
+    "rightTrackId": "veh-3",
+    "score": 0.6815224942795306,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-18",
+    "rightTrackId": "veh-28",
+    "score": 0.680733769956784,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-8",
+    "rightTrackId": "veh-23",
+    "score": 0.6807189319516803,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-4",
+    "rightTrackId": "veh-10",
+    "score": 0.6782201655545265,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-7",
+    "rightTrackId": "veh-23",
+    "score": 0.6780189768376044,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-20",
+    "rightTrackId": "veh-23",
+    "score": 0.6742188366233413,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-18",
+    "rightTrackId": "veh-14",
+    "score": 0.6738754340703946,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-18",
+    "rightTrackId": "veh-11",
+    "score": 0.6707363193670075,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-7",
+    "rightTrackId": "veh-24",
+    "score": 0.6705296873616939,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-6",
+    "rightTrackId": "veh-24",
+    "score": 0.6622017338336917,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-8",
+    "rightTrackId": "veh-24",
+    "score": 0.6621657464093709,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-3",
+    "rightTrackId": "veh-3",
+    "score": 0.6618004260068016,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-13",
+    "rightTrackId": "veh-14",
+    "score": 0.65693769729727,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-21",
+    "rightTrackId": "veh-28",
+    "score": 0.6433512674001052,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-11",
+    "rightTrackId": "veh-14",
+    "score": 0.641626391498173,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-4",
+    "rightTrackId": "veh-24",
+    "score": 0.6365880438505992,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-9",
+    "rightTrackId": "veh-8",
+    "score": 0.6364488193165923,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-4",
+    "rightTrackId": "veh-11",
+    "score": 0.6349646302167574,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-3",
+    "rightTrackId": "veh-7",
+    "score": 0.6326801063910249,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-4",
+    "rightTrackId": "veh-2",
+    "score": 0.6323233023592972,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-18",
+    "rightTrackId": "veh-24",
+    "score": 0.6314809668843162,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-9",
+    "rightTrackId": "veh-23",
+    "score": 0.6309931827302953,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-3",
+    "rightTrackId": "veh-24",
+    "score": 0.629783716744899,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-6",
+    "rightTrackId": "veh-10",
+    "score": 0.6225119680519063,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-7",
+    "rightTrackId": "veh-14",
+    "score": 0.6213539511007936,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-21",
+    "rightTrackId": "veh-23",
+    "score": 0.6205746756932893,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-8",
+    "rightTrackId": "veh-11",
+    "score": 0.6185732435783617,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-9",
+    "rightTrackId": "veh-11",
+    "score": 0.6159931307270803,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-15",
+    "rightTrackId": "veh-14",
+    "score": 0.6157602644100989,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-15",
+    "rightTrackId": "veh-22",
+    "score": 0.6125903562454578,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-9",
+    "rightTrackId": "veh-14",
+    "score": 0.6121661046088541,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-5",
+    "rightTrackId": "veh-2",
+    "score": 0.6106709894844883,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-8",
+    "rightTrackId": "veh-28",
+    "score": 0.6103233036099271,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-4",
+    "rightTrackId": "veh-28",
+    "score": 0.6095579295037926,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-16",
+    "rightTrackId": "veh-24",
+    "score": 0.6091419073153985,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-16",
+    "rightTrackId": "veh-14",
+    "score": 0.6054586960914607,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-20",
+    "rightTrackId": "veh-14",
+    "score": 0.6047565057711068,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-4",
+    "rightTrackId": "veh-23",
+    "score": 0.5974873140460998,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-3",
+    "rightTrackId": "veh-28",
+    "score": 0.5965282307260112,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-13",
+    "rightTrackId": "veh-2",
+    "score": 0.5952392099718056,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-15",
+    "rightTrackId": "veh-23",
+    "score": 0.5930568400245796,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-9",
+    "rightTrackId": "veh-2",
+    "score": 0.5906985559778626,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-8",
+    "rightTrackId": "veh-22",
+    "score": 0.5877860964454175,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-8",
+    "rightTrackId": "veh-10",
+    "score": 0.5796386423288706,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-7",
+    "rightTrackId": "veh-2",
+    "score": 0.573983108442811,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-13",
+    "rightTrackId": "veh-28",
+    "score": 0.5711023228250814,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-18",
+    "rightTrackId": "veh-22",
+    "score": 0.5703508715109716,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-5",
+    "rightTrackId": "veh-8",
+    "score": 0.5656106760538159,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-13",
+    "rightTrackId": "veh-22",
+    "score": 0.5634146392987514,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-16",
+    "rightTrackId": "veh-11",
+    "score": 0.5570642369405658,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-2",
+    "rightTrackId": "veh-18",
+    "score": 0.5566662983285414,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-7",
+    "rightTrackId": "veh-11",
+    "score": 0.5500377784770631,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-13",
+    "rightTrackId": "veh-24",
+    "score": 0.5467053426863064,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-3",
+    "rightTrackId": "veh-10",
+    "score": 0.544144547257991,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-21",
+    "rightTrackId": "veh-24",
+    "score": 0.5433650223164083,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-19",
+    "rightTrackId": "veh-14",
+    "score": 0.5293485649450286,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-13",
+    "rightTrackId": "veh-11",
+    "score": 0.5221268971802818,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-15",
+    "rightTrackId": "veh-11",
+    "score": 0.5179340891623233,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-3",
+    "rightTrackId": "veh-22",
+    "score": 0.510948678900959,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-20",
+    "rightTrackId": "veh-22",
+    "score": 0.505184846424812,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-19",
+    "rightTrackId": "veh-23",
+    "score": 0.4972006918586792,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-6",
+    "rightTrackId": "veh-22",
+    "score": 0.4820907570179203,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-19",
+    "rightTrackId": "veh-24",
+    "score": 0.4801208976561243,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-11",
+    "rightTrackId": "veh-28",
+    "score": 0.4722074714313167,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-7",
+    "rightTrackId": "veh-22",
+    "score": 0.46517859411560186,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-11",
+    "rightTrackId": "veh-24",
+    "score": 0.4603528826038107,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-13",
+    "rightTrackId": "veh-10",
+    "score": 0.4520408775347619,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-11",
+    "rightTrackId": "veh-11",
+    "score": 0.4498368790638055,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-9",
+    "rightTrackId": "veh-22",
+    "score": 0.44917190629168385,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-5",
+    "rightTrackId": "veh-22",
+    "score": 0.4474544049039518,
+    "accepted": false
+  },
+  {
+    "leftTrackId": "veh-19",
+    "rightTrackId": "veh-28",
+    "score": 0.44430397466148625,
+    "accepted": false
+  }
+]

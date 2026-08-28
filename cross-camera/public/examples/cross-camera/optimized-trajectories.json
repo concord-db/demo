@@ -1,0 +1,325 @@
+[
+  {
+    "vehicleId": "join_unique_074f20c7",
+    "attributes": {
+      "class": "sedan",
+      "color": "silver",
+      "subtype": "sedan"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 3.9039,
+        "exited": 4.938267
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 4.004,
+        "exited": 4.938267
+      }
+    ],
+    "matchScore": 0.9111949592939887,
+    "leftTrackId": "veh-20",
+    "rightTrackId": "veh-28"
+  },
+  {
+    "vehicleId": "join_unique_918572af",
+    "attributes": {
+      "class": "sedan",
+      "color": "white",
+      "subtype": "sedan"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 0.0,
+        "exited": 0.767433
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 0.0,
+        "exited": 2.168833
+      }
+    ],
+    "matchScore": 0.9091881328974148,
+    "leftTrackId": "veh-4",
+    "rightTrackId": "veh-3"
+  },
+  {
+    "vehicleId": "join_unique_de055e30",
+    "attributes": {
+      "class": "sedan",
+      "color": "silver",
+      "subtype": "suv"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 0.0,
+        "exited": 1.534867
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 0.166833,
+        "exited": 1.7017
+      }
+    ],
+    "matchScore": 0.9054222791578828,
+    "leftTrackId": "veh-5",
+    "rightTrackId": "veh-7"
+  },
+  {
+    "vehicleId": "join_unique_212bfca7",
+    "attributes": {
+      "class": "truck",
+      "color": "silver",
+      "subtype": "tractor trailer"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 3.370033,
+        "exited": 4.9049
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 3.336667,
+        "exited": 4.938267
+      }
+    ],
+    "matchScore": 0.8935604166881397,
+    "leftTrackId": "veh-19",
+    "rightTrackId": "veh-22"
+  },
+  {
+    "vehicleId": "join_unique_f8784a15",
+    "attributes": {
+      "class": "sedan",
+      "color": "black",
+      "subtype": "suv"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 3.3033,
+        "exited": 4.938267
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 3.4034,
+        "exited": 4.938267
+      }
+    ],
+    "matchScore": 0.8621495394387985,
+    "leftTrackId": "veh-18",
+    "rightTrackId": "veh-23"
+  },
+  {
+    "vehicleId": "join_unique_c321b9bd",
+    "attributes": {
+      "class": "suv",
+      "color": "blue",
+      "subtype": "suv"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 0.2002,
+        "exited": 3.2032
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 1.2012,
+        "exited": 4.3043
+      }
+    ],
+    "matchScore": 0.8580926744224155,
+    "leftTrackId": "veh-8",
+    "rightTrackId": "veh-14"
+  },
+  {
+    "vehicleId": "join_unique_a47bdb7c",
+    "attributes": {
+      "class": "sedan",
+      "color": "black",
+      "subtype": "suv"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 0.033367,
+        "exited": 3.2032
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 0.867533,
+        "exited": 3.670333
+      }
+    ],
+    "matchScore": 0.8542719867675412,
+    "leftTrackId": "veh-6",
+    "rightTrackId": "veh-11"
+  },
+  {
+    "vehicleId": "join_unique_redpickup26",
+    "attributes": {
+      "class": "truck",
+      "color": "red",
+      "subtype": "flatbed"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 0.867533,
+        "exited": 0.967633
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 0.867533,
+        "exited": 0.967633
+      }
+    ],
+    "matchScore": 0.8485770863825516,
+    "leftTrackId": "veh-1",
+    "rightTrackId": "veh-4"
+  },
+  {
+    "vehicleId": "join_unique_afc0460c",
+    "attributes": {
+      "class": "sedan",
+      "color": "white",
+      "subtype": "sedan"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 0.734067,
+        "exited": 3.069733
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 0.767433,
+        "exited": 2.669333
+      }
+    ],
+    "matchScore": 0.8449244530356607,
+    "leftTrackId": "veh-9",
+    "rightTrackId": "veh-10"
+  },
+  {
+    "vehicleId": "join_unique_21f13705",
+    "attributes": {
+      "class": "sedan",
+      "color": "gray",
+      "subtype": "suv"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 0.0,
+        "exited": 0.4004
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 0.0,
+        "exited": 0.233567
+      }
+    ],
+    "matchScore": 0.8373454628992413,
+    "leftTrackId": "veh-2",
+    "rightTrackId": "veh-1"
+  },
+  {
+    "vehicleId": "join_unique_309e0cb9",
+    "attributes": {
+      "class": "sedan",
+      "color": "black",
+      "subtype": "sedan"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 0.0,
+        "exited": 1.735067
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 0.0,
+        "exited": 2.469133
+      }
+    ],
+    "matchScore": 0.8317100914639672,
+    "leftTrackId": "veh-3",
+    "rightTrackId": "veh-2"
+  },
+  {
+    "vehicleId": "join_unique_984e4ae4",
+    "attributes": {
+      "class": "truck",
+      "color": "white",
+      "subtype": "pickup"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 2.769433,
+        "exited": 4.8048
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 3.470133,
+        "exited": 4.938267
+      }
+    ],
+    "matchScore": 0.8184057283186698,
+    "leftTrackId": "veh-15",
+    "rightTrackId": "veh-24"
+  },
+  {
+    "vehicleId": "join_unique_3b314f83",
+    "attributes": {
+      "class": "truck",
+      "color": "silver",
+      "subtype": "pickup"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 4.371033,
+        "exited": 4.938267
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 4.170833,
+        "exited": 4.938267
+      }
+    ],
+    "matchScore": 0.8029128891312,
+    "leftTrackId": "veh-12",
+    "rightTrackId": "veh-16",
+    "falsePositive": true
+  },
+  {
+    "vehicleId": "join_unique_3767633e",
+    "attributes": {
+      "class": "sedan",
+      "color": "white",
+      "subtype": "sedan"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 3.3033,
+        "exited": 4.6046
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 2.369033,
+        "exited": 4.4044
+      }
+    ],
+    "matchScore": 0.7833206389990407,
+    "leftTrackId": "veh-17",
+    "rightTrackId": "veh-18"
+  }
+]

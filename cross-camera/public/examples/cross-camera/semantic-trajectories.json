@@ -1,0 +1,86 @@
+[
+  {
+    "vehicleId": "v1",
+    "attributes": {
+      "class": "truck",
+      "color": "red",
+      "subtype": "tractor trailer"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 0.0,
+        "exited": 1.5
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 0.0,
+        "exited": 1.5
+      }
+    ],
+    "matchScore": 0.95
+  },
+  {
+    "vehicleId": "v2",
+    "attributes": {
+      "class": "car",
+      "color": "white",
+      "subtype": "sedan"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 1.5,
+        "exited": 5.0
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 0.5,
+        "exited": 4.0
+      }
+    ],
+    "matchScore": 0.92
+  },
+  {
+    "vehicleId": "v3",
+    "attributes": {
+      "class": "truck",
+      "color": "white",
+      "subtype": "pickup"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 2.5,
+        "exited": 5.0
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 2.5,
+        "exited": 5.0
+      }
+    ],
+    "matchScore": 0.98
+  },
+  {
+    "vehicleId": "v4",
+    "attributes": {
+      "class": "car",
+      "color": "silver",
+      "subtype": "sedan"
+    },
+    "timeline": [
+      {
+        "cameraId": "cam-i24v-highway2",
+        "entered": 3.0,
+        "exited": 5.0
+      },
+      {
+        "cameraId": "cam-i24v-highway3",
+        "entered": 3.5,
+        "exited": 5.0
+      }
+    ],
+    "matchScore": 0.96
+  }
+]

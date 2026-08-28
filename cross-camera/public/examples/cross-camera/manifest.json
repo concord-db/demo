@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "title": "Cross-camera vehicle association",
+  "duration": 5,
+  "source": {
+    "repository": "https://github.com/chanwutk/mmds",
+    "branch": "case_study_1_optimizations",
+    "commit": "7f0d16a6094110f1feb58418444eabc660c64ab1",
+    "exportedAt": "2026-08-20T21:27:46.841148+00:00",
+    "dataset": "I-24 MOTION / I24V (Gloudemans et al., WACV 2024)"
+  },
+  "cameras": [
+    {
+      "id": "cam-i24v-highway2",
+      "label": "Camera 02",
+      "video": "examples/cross-camera/highway2.mp4",
+      "width": 1920,
+      "height": 1080,
+      "fps": 29.97003
+    },
+    {
+      "id": "cam-i24v-highway3",
+      "label": "Camera 03",
+      "video": "examples/cross-camera/highway3.mp4",
+      "width": 1920,
+      "height": 1080,
+      "fps": 29.97003
+    }
+  ],
+  "files": {
+    "detections": "detections.json",
+    "tracks": "tracks.json",
+    "candidates": "candidates.json",
+    "semanticTrajectories": "semantic-trajectories.json",
+    "optimizedTrajectories": "optimized-trajectories.json",
+    "groundTruth": "ground-truth.json"
+  },
+  "recordedRun": {
+    "model": "gemini-3.1-flash-lite-preview",
+    "semantic": {
+      "predictions": 4,
+      "wallTimeSeconds": 28.855021583000052,
+      "mllmCalls": 1,
+      "mllmTokens": 1501,
+      "f1": 0.27272727272727276
+    },
+    "optimized": {
+      "predictions": 12,
+      "wallTimeSeconds": 29.983792000000903,
+      "mllmCalls": 0,
+      "mllmTokens": 0,
+      "f1": 0.2
+    }
+  },
+  "publishedMetrics": {
+    "semantic": {
+      "predictions": 4,
+      "truePositives": 4,
+      "falsePositives": 0,
+      "falseNegatives": 14,
+      "precision": 1.0,
+      "recall": 0.222,
+      "f1": 0.364,
+      "timelineIoU": 0.576,
+      "attributeExact": 0.583,
+      "wallTimeSeconds": 52.724,
+      "mllmCalls": 1,
+      "mllmTokens": 1515
+    },
+    "optimized": {
+      "predictions": 14,
+      "truePositives": 13,
+      "falsePositives": 1,
+      "falseNegatives": 5,
+      "precision": 0.929,
+      "recall": 0.722,
+      "f1": 0.813,
+      "timelineIoU": 0.762,
+      "attributeExact": 0.538,
+      "wallTimeSeconds": 99.559,
+      "mllmCalls": 0,
+      "mllmTokens": 0
+    }
+  }
+}
