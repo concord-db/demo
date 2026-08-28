@@ -103,7 +103,7 @@ test("page exposes accessible tabs, controls, and lazy media", async () => {
   const html = await readFile(new URL("index.html", demoRoot), "utf8");
   const css = await readFile(new URL("styles.css", demoRoot), "utf8");
   assert.match(html, /role="tablist"/);
-  assert.match(html, /name="repository" content="concord-db\/concord-demo"/);
+  assert.match(html, /name="repository" content="concord-db\/demo"/);
   assert.equal((html.match(/role="tab"/g) || []).length, 3);
   assert.match(html, /id="previous-stage"/);
   assert.match(html, /id="next-stage"/);

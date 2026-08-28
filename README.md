@@ -64,7 +64,7 @@ npm run test:e2e
 ## Deployment
 
 `.github/workflows/deploy-pages.yml` tests both demos, builds the cross-camera
-app with a `/concord-demo/cross-camera/` base path, assembles the landing page
+app with a `/demo/cross-camera/` base path, assembles the landing page
 and both demos into one directory, and deploys it to GitHub Pages on every push
 to `main`.
 

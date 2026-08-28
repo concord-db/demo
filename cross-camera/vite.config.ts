@@ -2,7 +2,7 @@ import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: process.env.GITHUB_ACTIONS ? '/concord-demo/cross-camera/' : '/',
+  base: process.env.GITHUB_ACTIONS ? '/demo/cross-camera/' : '/',
   plugins: [react()],
   test: {
     environment: 'jsdom',

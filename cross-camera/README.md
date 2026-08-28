@@ -60,7 +60,7 @@ its `uv` environment, the I24V source MP4s, `ffmpeg`, and `GEMINI_API_KEY`.
 
 ```bash
 cd /path/to/mmds
-uv run python /path/to/concord-demo/scripts/export_cross_camera.py \
+uv run python /path/to/demo/scripts/export_cross_camera.py \
   --mmds /path/to/mmds
 ```
 
@@ -86,7 +86,7 @@ deployment need no model-specific changes.
 
 This demo ships as the `/cross-camera/` section of the combined Concord site.
 The repository-root workflow `.github/workflows/deploy-pages.yml` builds it with
-a `/concord-demo/cross-camera/` base path and deploys it alongside the
+a `/demo/cross-camera/` base path and deploys it alongside the
 event-localization demo. See the root `README.md` for the full site layout.
 
 ## Data attribution
