@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Interactive replay of Concord's video-only, transcript-only, and transcript-to-video queries."
+    />
+    <title>Concord · Cross-Modal Event Localization</title>
+    <link rel="stylesheet" href="./styles.css?v=3" />
+    <script src="./app.js?v=3" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Concord demo home">
+        <span class="brand-mark">C</span>
+        <span><strong>Concord</strong><small>research demo</small></span>
+      </a>
+      <nav aria-label="Demo navigation">
+        <a href="#demo">Demo</a>
+        <a href="#results">Results</a>
+        <a href="https://github.com/chanwutk/mmds">MMDS</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero shell">
+        <div class="eyebrow">CIDR 2027 · Interactive artifact</div>
+        <h1>One event query.<br /><em>Three ways to execute it.</em></h1>
+        <p class="hero-copy">
+          See how Concord substitutes a source-aligned transcript for video—or
+          uses the transcript to restrict expensive video inference to a small
+          fraction of the original lecture duration.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#demo">Explore the replay</a>
+          <a class="button" href="#results">View published results</a>
+        </div>
+
+        <div class="rewrite-summary" aria-label="Query rewrite summary">
+          <div><span>Baseline</span><code>Video → Localize</code><small id="summary-baseline-video">—</small></div>
+          <span class="summary-arrow" aria-hidden="true">→</span>
+          <div><span>O1</span><code>Transcript → Localize</code><small id="summary-o1-video">—</small></div>
+          <span class="summary-arrow" aria-hidden="true">→</span>
+          <div class="summary-featured"><span>O2</span><code>Transcript → View → Localize</code><small id="summary-o2-video">—</small></div>
+        </div>
+      </section>
+
+      <section class="demo-section" id="demo">
+        <div class="shell">
+          <div class="section-kicker">O1 + O2 · Cross-modal rewrites</div>
+          <div class="section-heading">
+            <div>
+              <h2>Lecture event localization</h2>
+              <p>
+                Find every interval where the lecturer creates a large, intact
+                soap bubble that remains visible until it ruptures.
+              </p>
+            </div>
+            <span class="recorded-badge">● recorded execution</span>
+          </div>
+
+          <div class="plan-tabs" role="tablist" aria-label="Query alternatives">
+            <button id="tab-baseline" role="tab" aria-selected="false" aria-controls="plan-panel" data-plan="baseline">
+              <span>Baseline</span><strong>Video-only</strong><small>Full video → MLLM</small>
+            </button>
+            <button id="tab-o1" role="tab" aria-selected="false" aria-controls="plan-panel" data-plan="o1">
+              <span>O1 rewrite</span><strong>Transcript-only</strong><small>Modality substitution</small>
+            </button>
+            <button id="tab-o2" role="tab" aria-selected="true" aria-controls="plan-panel" data-plan="o2">
+              <span>O2 rewrite</span><strong>Transcript → video</strong><small>Temporal candidate pushdown</small>
+            </button>
+          </div>
+
+          <article class="plan-card" id="plan-panel" role="tabpanel" aria-labelledby="tab-o2">
+            <div class="expression-row">
+              <span>VRA</span>
+              <code id="plan-expression">Loading recorded query…</code>
+            </div>
+
+            <ol class="stage-list" id="stage-list" aria-label="Operator stages"></ol>
+
+            <div class="inspector-grid">
+              <div class="inspector-copy">
+                <span class="inspector-label">Now inspecting</span>
+                <h3 id="stage-title">Loading…</h3>
+                <p id="stage-description"></p>
+                <div class="stage-controls">
+                  <button class="icon-button" id="previous-stage" type="button">← Previous</button>
+                  <button class="button button-primary" id="replay-plan" type="button">Replay query</button>
+                  <button class="icon-button" id="next-stage" type="button">Next →</button>
+                </div>
+              </div>
+
+              <div class="source-view" aria-label="Source video timeline">
+                <div class="source-view-header">
+                  <div><span>Source video</span><strong>MIT 8.03 · Lecture 20</strong></div>
+                  <strong id="processed-duration">129.8 s retained</strong>
+                </div>
+                <div class="timeline-labels"><span>0:00</span><span>82:25</span></div>
+                <div class="timeline" id="source-timeline" aria-label="Complete lecture timeline">
+                  <div class="timeline-track"></div>
+                  <div class="timeline-window" id="candidate-window"></div>
+                  <div class="timeline-event event-one"></div>
+                  <div class="timeline-event event-two"></div>
+                </div>
+                <div class="timeline-legend">
+                  <span><i class="legend-window"></i>Processed video</span>
+                  <span><i class="legend-event"></i>Reference events</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="evidence-grid">
+              <section class="evidence-panel transcript-panel" id="transcript-panel" aria-labelledby="transcript-heading">
+                <div class="panel-heading">
+                  <div><span>Source-aligned representation</span><h3 id="transcript-heading">Transcript evidence</h3></div>
+                  <span id="transcript-count">—</span>
+                </div>
+                <div class="candidate-rationale" id="candidate-rationale"></div>
+                <div class="transcript-scroll" id="transcript-segments"></div>
+              </section>
+
+              <section class="evidence-panel video-panel" id="video-panel" aria-labelledby="video-heading">
+                <div class="panel-heading">
+                  <div><span>Materialized View</span><h3 id="video-heading">Candidate clip</h3></div>
+                  <span id="clip-range">—</span>
+                </div>
+                <div class="video-frame">
+                  <video id="candidate-video" controls preload="metadata">
+                    <source src="./media/soap-bubble-candidate-v1.mp4" type="video/mp4" />
+                    Your browser does not support HTML video.
+                  </video>
+                  <div class="media-fallback" id="media-fallback" hidden>
+                    The recorded clip could not be loaded. Timeline and output records remain available below.
+                  </div>
+                </div>
+                <div class="detail-timeline" id="detail-timeline" aria-label="Candidate clip event timeline"></div>
+                <div class="detail-legend">
+                  <span><i class="legend-reference"></i>Reference</span>
+                  <span><i class="legend-prediction"></i>Prediction</span>
+                </div>
+                <p class="media-credit">
+                  Excerpt from MIT OpenCourseWare 8.03SC, Fall 2016. Candidate clip shown for research demonstration.
+                </p>
+              </section>
+
+              <section class="evidence-panel output-panel" aria-labelledby="output-heading">
+                <div class="panel-heading">
+                  <div><span>Operator output</span><h3 id="output-heading">Localized events</h3></div>
+                  <span id="prediction-count">—</span>
+                </div>
+                <div class="prediction-list" id="prediction-list"></div>
+              </section>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="results-section shell" id="results">
+        <div class="section-kicker">Published evaluation · Table 2</div>
+        <h2>Less video, better localization</h2>
+        <p class="results-intro">
+          All three queries use the same workload and output contract. Values
+          below are frozen publication results, not recomputed in the browser.
+        </p>
+
+        <div class="metric-spotlight">
+          <article><span>Video processed</span><strong id="metric-video">—</strong><small>O2 lecture query</small></article>
+          <article><span>Candidate recall</span><strong id="metric-recall">—</strong><small>4 of 4 events covered</small></article>
+          <article><span>MLLM cost</span><strong id="metric-cost">—</strong><small>relative to video-only</small></article>
+          <article><span>F1 score</span><strong id="metric-f1">—</strong><small>at tIoU ≥ .3</small></article>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <caption>Lecture event-localization results at the primary tIoU threshold.</caption>
+            <thead><tr><th>Query</th><th>Video</th><th>Precision</th><th>Recall</th><th>F1</th><th>MLLM tokens</th><th>Cost</th><th>Time</th></tr></thead>
+            <tbody id="results-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="paper-section">
+        <div class="shell paper-card">
+          <div><span class="section-kicker">Read the research</span><h2>Concord: A Video Relational Algebra for Cross-Modal Query Optimization</h2><p>Sultan Muratbek, Charisse Ivana Yeung, Chanwut Kittivorawong, and Alvin Cheung.</p></div>
+          <a class="button" href="https://github.com/chanwutk/mmds">MMDS repository ↗</a>
+        </div>
+      </section>
+    </main>
+
+    <footer><div class="shell"><span>Concord · UC Berkeley</span><span>Static replay · no inference</span></div></footer>
+  </body>
+</html>
