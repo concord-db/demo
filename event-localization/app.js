@@ -263,16 +263,19 @@ function predictionCards({ output = false } = {}) {
   const cards = node("div", { className: "prediction-list" });
   currentPlan().predictions.forEach((prediction, index) => {
     const card = node("article", { className: "prediction-card" });
-    const button = node("button", { attributes: { type: "button" } });
     const isClipRelative = state.planId === "o2" && !output;
+    const isSeekable = isClipRelative;
+    const content = isSeekable
+      ? node("button", { className: "prediction-card-content", attributes: { type: "button", "aria-label": `Play event ${index + 1} in the visible candidate clip` } })
+      : node("div", { className: "prediction-card-content" });
     const offset = isClipRelative ? data.trace.materializedMedia.sourceStartSeconds : 0;
-    button.append(
+    content.append(
       node("span", { text: output ? `Output tuple ${String(index + 1).padStart(2, "0")}` : `Event ${String(index + 1).padStart(2, "0")}` }),
       node("strong", { text: `${formatClock(prediction.startSeconds - offset, true)}–${formatClock(prediction.endSeconds - offset, true)}${isClipRelative ? " clip time" : " source time"}` }),
       node("p", { text: prediction.evidence }),
     );
-    if (state.planId !== "o1") button.addEventListener("click", () => seekToPrediction(prediction.startSeconds));
-    card.append(button);
+    if (isSeekable) content.addEventListener("click", () => seekToPrediction(prediction.startSeconds));
+    card.append(content);
     cards.append(card);
   });
   panel.append(cards);

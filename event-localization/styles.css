@@ -211,9 +211,10 @@ h2 { margin-bottom: 10px; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.06
 .retained-meter-fill { height: 100%; min-width: 3px; border-radius: inherit; background: var(--accent-2); }
 .prediction-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .prediction-card { min-width: 0; padding: 15px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
-.prediction-card button { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; text-align: left; }
-.prediction-card button:hover strong, .prediction-card button:focus-visible strong { color: var(--accent-dark); }
-.prediction-card button:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+.prediction-card-content { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; text-align: left; }
+button.prediction-card-content { cursor: pointer; }
+button.prediction-card-content:hover strong, button.prediction-card-content:focus-visible strong { color: var(--accent-dark); }
+button.prediction-card-content:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .prediction-card span { color: var(--muted); font-size: .7rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
 .prediction-card strong { display: block; margin: 5px 0; font-variant-numeric: tabular-nums; }
 .prediction-card p { overflow: hidden; display: -webkit-box; margin: 0; color: var(--muted); font-size: .78rem; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }

@@ -33,11 +33,13 @@ test("O2 reveals recorded artifacts only after their producing operators execute
 
   await page.locator("#run-next-stage").click();
   await expect(page.locator(".prediction-card")).toHaveCount(3);
+  await expect(page.locator(".prediction-card button")).toHaveCount(3);
   await expect(page.locator(".detail-marker.prediction")).toHaveCount(3);
   await expect(page.locator(".prediction-card").first()).toContainText("clip time");
 
   await page.locator("#run-next-stage").click();
   await expect(page.locator(".prediction-card")).toHaveCount(3);
+  await expect(page.locator(".prediction-card button")).toHaveCount(0);
   await expect(page.locator(".prediction-card").first()).toContainText("source time");
   await expect(page.locator("#execution-status")).toContainText("Execution complete");
 });
@@ -57,6 +59,8 @@ test("video fraction is operator-scoped across all three alternatives", async ({
   await expect(page.locator(".retained-meter")).toHaveCount(0);
   await page.locator("#run-next-stage").click();
   await expect(page.locator(".retained-meter")).toContainText("100.00%");
+  await expect(page.locator(".prediction-card button")).toHaveCount(0);
+  await expect(page.locator("video")).toHaveCount(0);
 
   await page.locator("#tab-o1").click();
   for (let index = 0; index < 3; index += 1) await page.locator("#run-next-stage").click();
