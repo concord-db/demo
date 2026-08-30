@@ -175,7 +175,8 @@ test("page exposes accessible query tabs and execution controls", async () => {
   assert.match(html, /id="run-next-stage"/);
   assert.match(html, /id="reset-plan"/);
   assert.match(html, /id="operator-trace"/);
-  assert.match(html, /styles\.css\?v=4/);
+  assert.match(html, /styles\.css\?v=5/);
+  assert.match(css, /\.artifact-heading > div\s*\{[^}]*display:\s*flex;[^}]*flex-direction:\s*column;[^}]*gap:\s*4px;/);
   assert.match(app, /youtube-nocookie\.com/);
   assert.match(app, /preload: "metadata"/);
   assert.equal(html.includes("soap-bubble-candidate-v1.mp4"), false);

@@ -156,6 +156,7 @@ h2 { margin-bottom: 10px; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.06
 .artifact-panel { min-width: 0; padding: 18px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .artifact-panel.is-wide { grid-column: 1 / -1; }
 .artifact-heading { display: flex; justify-content: space-between; align-items: start; gap: 16px; margin-bottom: 14px; }
+.artifact-heading > div { display: flex; flex-direction: column; gap: 4px; }
 .artifact-heading span { color: var(--muted); font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .artifact-heading strong { font-size: .95rem; }
 .artifact-note { margin: 0; color: var(--muted); font-size: .82rem; }
