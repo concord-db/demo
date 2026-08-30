@@ -76,37 +76,177 @@ def select_predictions(document: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
+def stage(
+    stage_id: str,
+    operator: str,
+    summary: str,
+    description: str,
+    *,
+    consumes: list[str],
+    produces: list[str],
+    known_before: list[str],
+    known_after: list[str],
+    evidence: list[str],
+    parameters: list[str] | None = None,
+) -> dict[str, Any]:
+    """Build one explicit, renderer-independent operator-stage contract."""
+    return {
+        "id": stage_id,
+        "operator": operator,
+        "summary": summary,
+        "description": description,
+        "consumes": consumes,
+        "produces": produces,
+        "knownBefore": known_before,
+        "knownAfter": known_after,
+        "evidence": evidence,
+        "parameters": parameters or [],
+    }
+
+
 def build_plan_content() -> dict[str, dict[str, Any]]:
     return {
         "baseline": {
             "label": "Video-only",
             "expression": "Unnest_E ( Map_localizeᴠ(v,p)→E ( R ) )",
             "stages": [
-                {"title": "Input", "summary": "Complete lecture", "description": "Read one source-aligned lecture record containing the complete 82-minute video."},
-                {"title": "Video localize", "summary": "Full-video MLLM", "description": "Apply the video event localizer to the complete lecture under the requested event description."},
-                {"title": "Unnest", "summary": "Event intervals", "description": "Emit one source-time tuple for every event interval returned by the video localizer."},
+                stage(
+                    "input", "Input", "Read the complete lecture",
+                    "Construct one input tuple containing the complete lecture video and the event description.",
+                    consumes=["stored lecture record", "event description p"],
+                    produces=["R(source_id, v, p)"],
+                    known_before=["Lecture identifier", "event description"],
+                    known_after=["Complete 82-minute source video v"],
+                    evidence=["sourceMedia"],
+                ),
+                stage(
+                    "video-localize", "Video localize", "Run the MLLM over the full video",
+                    "Apply the video event localizer to the complete lecture under the requested event description.",
+                    consumes=["complete video v", "event description p"],
+                    produces=["event collection E"],
+                    known_before=["Full source video", "requested audiovisual event"],
+                    known_after=["Predicted event intervals in source time"],
+                    evidence=["sourceMedia", "retainedFraction", "predictions"],
+                    parameters=["video extent: 100%", "semantic function: localizeᴠ"],
+                ),
+                stage(
+                    "unnest", "Unnest", "Emit one tuple per event",
+                    "Expand the event collection into one source-time output tuple for each localized occurrence.",
+                    consumes=["event collection E"],
+                    produces=["one tuple per event"],
+                    known_before=["Collection-valued event field E"],
+                    known_after=["Final event relation"],
+                    evidence=["outputRecords"],
+                ),
             ],
         },
         "o1": {
             "label": "Transcript-only",
             "expression": "Unnest_E ( Map_localizeᵀ(t,p)→E ( R ) )",
             "stages": [
-                {"title": "Input", "summary": "Materialized transcript", "description": "Read the source-aligned transcript as an already materialized representation of the lecture."},
-                {"title": "Transcript localize", "summary": "Text-only MLLM", "description": "Substitute transcript localization for video localization while preserving the event output schema."},
-                {"title": "Unnest", "summary": "One broad interval", "description": "Emit the transcript-derived source-time interval. Here, one 57-second semantic neighborhood contains both visible reference events."},
+                stage(
+                    "input", "Input", "Read the materialized transcript",
+                    "Construct one input tuple containing the source-aligned transcript and the event description.",
+                    consumes=["stored lecture record", "event description p"],
+                    produces=["R(source_id, t, p)"],
+                    known_before=["Lecture identifier", "event description"],
+                    known_after=["Timestamped transcript t"],
+                    evidence=["transcript"],
+                ),
+                stage(
+                    "transcript-localize", "Transcript localize", "Run a text-only MLLM",
+                    "Substitute transcript localization for video localization while preserving the event output schema.",
+                    consumes=["timestamped transcript t", "event description p"],
+                    produces=["event collection E"],
+                    known_before=["Transcript text and source-time segments"],
+                    known_after=["One broad transcript-derived event interval"],
+                    evidence=["transcript", "predictions"],
+                    parameters=["semantic function: localizeᵀ", "video input: none"],
+                ),
+                stage(
+                    "unnest", "Unnest", "Emit the transcript-derived interval",
+                    "Expand the event collection into output tuples. Here, one 57-second semantic neighborhood contains both visible reference events.",
+                    consumes=["event collection E"],
+                    produces=["one tuple per event"],
+                    known_before=["Collection-valued event field E"],
+                    known_after=["Final event relation"],
+                    evidence=["outputRecords"],
+                ),
             ],
         },
         "o2": {
             "label": "Transcript → video",
             "expression": "Candidateᵀ → Window → Resolve → View → Localizeᴠ → Reconcile",
             "stages": [
-                {"title": "Input", "summary": "Video + transcript", "description": "Read the lecture video together with its source-aligned, timestamped transcript."},
-                {"title": "Candidate", "summary": "High-recall transcript search", "description": "Use a query-conditioned text MLLM to identify transcript-grounded source-time ranges that may contain the requested visible event."},
-                {"title": "Window", "summary": "Add temporal context", "description": "Pad the transcript-grounded range with temporal context, producing source boundaries from 6:25.88 to 8:35.68."},
-                {"title": "Resolve", "summary": "Coalesce overlaps", "description": "Merge overlapping candidate windows so the same source interval is not materialized or processed repeatedly."},
-                {"title": "View", "summary": "Materialize 129.8 s", "description": "Materialize the retained source interval as a standalone video clip while preserving its source identifier and offset."},
-                {"title": "Video localize", "summary": "Clip-level MLLM", "description": "Apply the video event localizer to the retained clip, distinguishing separate visible occurrences within the broad transcript neighborhood."},
-                {"title": "Reconcile", "summary": "Return source-time events", "description": "Translate clip-relative predictions back to source time and return the event collection expected by the original query."},
+                stage(
+                    "input", "Input", "Read video and aligned transcript",
+                    "Construct one input tuple containing the lecture video, its source-aligned transcript, and the event description.",
+                    consumes=["stored lecture record", "event description p"],
+                    produces=["R(source_id, v, t, p)"],
+                    known_before=["Lecture identifier", "event description"],
+                    known_after=["Complete video v", "timestamped transcript t"],
+                    evidence=["sourceMedia", "transcriptAvailability"],
+                ),
+                stage(
+                    "candidate", "Candidate", "Find a high-recall transcript range",
+                    "Use a query-conditioned text MLLM to identify transcript-grounded source-time ranges that may contain the requested visible event.",
+                    consumes=["timestamped transcript t", "event description p"],
+                    produces=["candidate range c"],
+                    known_before=["Transcript text and source-time segments"],
+                    known_after=["Unpadded candidate: 6:55.88–8:05.68"],
+                    evidence=["transcript", "candidateRange"],
+                    parameters=["objective: high recall", "modality: text"],
+                ),
+                stage(
+                    "window", "Window", "Add temporal context",
+                    "Expand the transcript-derived candidate with temporal context to cover possible speech–video misalignment.",
+                    consumes=["candidate range c"],
+                    produces=["padded interval (s, e)"],
+                    known_before=["Unpadded source-time candidate"],
+                    known_after=["Padded window: 6:25.88–8:35.68"],
+                    evidence=["windowTimeline"],
+                    parameters=["padding: 30 s before and after"],
+                ),
+                stage(
+                    "resolve", "Resolve", "Coalesce overlapping windows",
+                    "Merge overlapping windows so the same source interval is not materialized or processed repeatedly.",
+                    consumes=["padded candidate windows"],
+                    produces=["disjoint retained windows"],
+                    known_before=["One padded window in this trace"],
+                    known_after=["One disjoint 129.8-second window"],
+                    evidence=["resolvedTimeline"],
+                    parameters=["equivalence: temporal overlap"],
+                ),
+                stage(
+                    "view", "View", "Materialize the retained interval",
+                    "Materialize the retained source interval as a standalone clip while preserving its source identifier and offset.",
+                    consumes=["video v", "source boundaries (s, e)"],
+                    produces=["materialized clip v_c"],
+                    known_before=["One retained source-time window"],
+                    known_after=["129.8-second clip with source offset 6:25.88"],
+                    evidence=["materializedClip", "retainedFraction"],
+                    parameters=["retained video: 2.47%"],
+                ),
+                stage(
+                    "video-localize", "Video localize", "Run the MLLM on the clip",
+                    "Apply the video event localizer to the retained clip, distinguishing separate visible occurrences within the broad transcript neighborhood.",
+                    consumes=["materialized clip v_c", "event description p"],
+                    produces=["clip-relative event collection E_c"],
+                    known_before=["Candidate clip and event description"],
+                    known_after=["Three clip-level predicted occurrences"],
+                    evidence=["materializedClip", "retainedFraction", "predictions"],
+                    parameters=["semantic function: localizeᴠ", "video extent: 2.47%"],
+                ),
+                stage(
+                    "reconcile", "Reconcile", "Return source-time events",
+                    "Translate clip-relative predictions back to source time and return the event collection expected by the original query.",
+                    consumes=["clip-relative events E_c", "clip source offset"],
+                    produces=["source-time event collection E"],
+                    known_before=["Clip-relative predictions", "source offset 6:25.88"],
+                    known_after=["Final event relation in source time"],
+                    evidence=["outputRecords"],
+                    parameters=["mapping: source time = clip time + offset"],
+                ),
             ],
         },
     }
@@ -171,15 +311,20 @@ def build_artifact(mmds_root: Path, media_path: Path) -> dict[str, Any]:
     o2_cost = methods["transcript_video"]["api_usage"]["estimated_cost_usd"]
     clip_row = select_pair(clip_manifest["clips"])
 
-    return {
-        "schemaVersion": 1,
+    trace = {
         "experiment": EXPERIMENT,
         "query": {"id": QUERY_ID, "text": candidate["query_text"]},
         "source": {
             "id": LECTURE_ID,
-            "title": "MIT 8.03SC Lecture 20",
+            "title": "MIT 8.03SC Lecture 20: Interference, Soap Bubble",
             "durationSeconds": pair["duration_seconds"],
             "sha256": candidate["video"]["sha256"],
+            "media": {
+                "kind": "youtube",
+                "youtubeId": "VkbtIDSHfSc",
+                "pageUrl": "https://ocw.mit.edu/courses/8-03sc-physics-iii-vibrations-and-waves-fall-2016/resources/copy2_of_lecture-20-video/",
+                "thumbnailUrl": "https://i.ytimg.com/vi/VkbtIDSHfSc/hqdefault.jpg",
+            },
         },
         "candidate": {
             "startSeconds": candidate_window["start_seconds"],
@@ -192,7 +337,8 @@ def build_artifact(mmds_root: Path, media_path: Path) -> dict[str, Any]:
             "confidence": segment_range["confidence"],
             "evidence": segment_range["evidence"],
         },
-        "media": {
+        "materializedMedia": {
+            "kind": "file",
             "url": "./media/soap-bubble-candidate-v1.mp4",
             "sourceStartSeconds": clip_row["source_start_seconds"],
             "sourceEndSeconds": clip_row["source_end_seconds"],
@@ -205,12 +351,21 @@ def build_artifact(mmds_root: Path, media_path: Path) -> dict[str, Any]:
         ],
         "transcriptSegments": transcript_segments,
         "plans": plans,
-        "results": results,
-        "summary": {
-            "candidateRecall": o2_metrics["candidate_recall_at_any_coverage"],
-            "candidateSelectivity": o2_metrics["candidate_selectivity"],
-            "costReductionFraction": 1.0 - (o2_cost / naive_cost),
+    }
+    publication_evaluation = {
+        "scopeLabel": "Three lectures and three event-localization queries",
+        "workload": {
+            "lectureCount": 3,
             "referenceEventCount": o2_metrics["ground_truth_event_count"],
+            "primaryTiouThreshold": 0.3,
+        },
+        "results": results,
+        "candidateMetrics": {
+            "recall": o2_metrics["candidate_recall_at_any_coverage"],
+            "selectivity": o2_metrics["candidate_selectivity"],
+        },
+        "summary": {
+            "costReductionFraction": 1.0 - (o2_cost / naive_cost),
         },
         "provenance": {
             "comparisonSha256": sha256(comparison_path),
@@ -220,12 +375,17 @@ def build_artifact(mmds_root: Path, media_path: Path) -> dict[str, Any]:
             "transcriptSha256": sha256(transcript_path),
         },
     }
+    return {
+        "schemaVersion": 2,
+        "trace": trace,
+        "publicationEvaluation": publication_evaluation,
+    }
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--mmds-root", required=True, type=Path)
-    parser.add_argument("--output", type=Path, default=Path("data/event-localization-v1.json"))
+    parser.add_argument("--output", type=Path, default=Path("data/event-localization-v2.json"))
     parser.add_argument("--media", type=Path, default=Path("media/soap-bubble-candidate-v1.mp4"))
     args = parser.parse_args()
 

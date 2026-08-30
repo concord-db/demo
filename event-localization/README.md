@@ -6,8 +6,10 @@ No model inference runs in the browser.
 
 ## Frozen data
 
-`data/event-localization-v1.json` is generated from the evaluated MMDS
-artifacts. Regenerate it from an MMDS checkout with:
+`data/event-localization-v2.json` is generated from the evaluated MMDS
+artifacts. Schema version 2 separates the single Lecture 20 execution trace
+from the aggregate publication evaluation and records an explicit contract for
+every operator stage. Regenerate it from an MMDS checkout with:
 
 ```bash
 python3 scripts/export_demo_data.py --mmds-root /path/to/mmds
@@ -19,9 +21,13 @@ in the CIDR 2027 paper.
 
 ## Validation
 
-```bash
-node --test tests/*.test.mjs
-```
+The unit suite validates the published values, operator contracts, execution
+state, timestamp mappings, media digest, and public-path hygiene. The browser
+suite verifies progressive disclosure, deferred media loading, operator-scoped
+video fractions, and mobile layout:
 
-The test suite validates the published values, timestamp mappings, media
-digest, public-path hygiene, and the page's required interaction contracts.
+```bash
+npm install
+npm test
+npm run test:e2e
+```

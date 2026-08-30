@@ -1,0 +1,678 @@
+{
+  "publicationEvaluation": {
+    "candidateMetrics": {
+      "recall": 1.0,
+      "selectivity": 0.024722584117069787
+    },
+    "provenance": {
+      "candidateSha256": "d44b9e5305650f100eb8ca9fa4ec641e4f3658b563f53e184d014b343f7d5928",
+      "clipManifestSha256": "634f803be57b58373dd197ca6fbb580c364aefbf56f0c0b089b932c1bc736dac",
+      "comparisonSha256": "b96976a96e8310e0f12a14c1528409d2f983be23f56ceea90903634c6da22b4f",
+      "groundTruthSha256": "ada91a821f9da40dca53f270487b2d4186c38a6dcc7e52d1fd87f893d2353601",
+      "transcriptSha256": "680e369c95bee92bf454e01afc0d3a1c2a27732083518791149a8ca45c8040b1"
+    },
+    "results": [
+      {
+        "costUsd": 0.3217895,
+        "f1": 0.5,
+        "label": "Video-only",
+        "planId": "baseline",
+        "precision": 0.5,
+        "recall": 0.5,
+        "timeSeconds": 396.1677924999967,
+        "tokenCount": 1285453,
+        "videoFraction": 1.0
+      },
+      {
+        "costUsd": 0.03233175,
+        "f1": 0.28571428571428575,
+        "label": "Transcript-only",
+        "planId": "o1",
+        "precision": 0.3333333333333333,
+        "recall": 0.25,
+        "timeSeconds": 3.602044041035697,
+        "tokenCount": 128412,
+        "videoFraction": 0.0
+      },
+      {
+        "costUsd": 0.0412935,
+        "f1": 0.888888888888889,
+        "label": "Transcript \u2192 video",
+        "planId": "o2",
+        "precision": 0.8,
+        "recall": 1.0,
+        "timeSeconds": 100.45890529197641,
+        "tokenCount": 161479,
+        "videoFraction": 0.024722584117069787
+      }
+    ],
+    "scopeLabel": "Three lectures and three event-localization queries",
+    "summary": {
+      "costReductionFraction": 0.8716754275698866
+    },
+    "workload": {
+      "lectureCount": 3,
+      "primaryTiouThreshold": 0.3,
+      "referenceEventCount": 4
+    }
+  },
+  "schemaVersion": 2,
+  "trace": {
+    "candidate": {
+      "confidence": 0.9,
+      "durationSeconds": 129.80000000000007,
+      "endSeconds": 515.6800000000001,
+      "endSegmentId": 134,
+      "evidence": "The lecturer describes and executes a demonstration using two sticks in soap water to create and maintain a soap bubble until it ruptures.",
+      "startSeconds": 385.88,
+      "startSegmentId": 117,
+      "unpaddedEndSeconds": 485.68,
+      "unpaddedStartSeconds": 415.88
+    },
+    "experiment": "cross_modal_lecture_verified_3pair_v1",
+    "materializedMedia": {
+      "expectedDurationSeconds": 129.8297,
+      "kind": "file",
+      "sha256": "1bcb64c04e714b8ce638dd4b2b7e059fb06582fca25ee192fea15feb4735d1aa",
+      "sourceEndSeconds": 515.6800000000001,
+      "sourceStartSeconds": 385.88,
+      "url": "./media/soap-bubble-candidate-v1.mp4"
+    },
+    "plans": {
+      "baseline": {
+        "expression": "Unnest_E ( Map_localize\u1d20(v,p)\u2192E ( R ) )",
+        "label": "Video-only",
+        "predictions": [
+          {
+            "confidence": 1.0,
+            "endSeconds": 468.0,
+            "endSegmentId": null,
+            "evidence": "The lecturer creates a soap film by pulling apart two sticks, which then remains suspended for a short duration until it breaks.",
+            "startSeconds": 436.0,
+            "startSegmentId": null
+          },
+          {
+            "confidence": 0.8,
+            "endSeconds": 485.0,
+            "endSegmentId": null,
+            "evidence": "The lecturer pulls apart two sticks to create a soap film which remains suspended briefly before breaking.",
+            "startSeconds": 478.0,
+            "startSegmentId": null
+          }
+        ],
+        "stages": [
+          {
+            "consumes": [
+              "stored lecture record",
+              "event description p"
+            ],
+            "description": "Construct one input tuple containing the complete lecture video and the event description.",
+            "evidence": [
+              "sourceMedia"
+            ],
+            "id": "input",
+            "knownAfter": [
+              "Complete 82-minute source video v"
+            ],
+            "knownBefore": [
+              "Lecture identifier",
+              "event description"
+            ],
+            "operator": "Input",
+            "parameters": [],
+            "produces": [
+              "R(source_id, v, p)"
+            ],
+            "summary": "Read the complete lecture"
+          },
+          {
+            "consumes": [
+              "complete video v",
+              "event description p"
+            ],
+            "description": "Apply the video event localizer to the complete lecture under the requested event description.",
+            "evidence": [
+              "sourceMedia",
+              "retainedFraction",
+              "predictions"
+            ],
+            "id": "video-localize",
+            "knownAfter": [
+              "Predicted event intervals in source time"
+            ],
+            "knownBefore": [
+              "Full source video",
+              "requested audiovisual event"
+            ],
+            "operator": "Video localize",
+            "parameters": [
+              "video extent: 100%",
+              "semantic function: localize\u1d20"
+            ],
+            "produces": [
+              "event collection E"
+            ],
+            "summary": "Run the MLLM over the full video"
+          },
+          {
+            "consumes": [
+              "event collection E"
+            ],
+            "description": "Expand the event collection into one source-time output tuple for each localized occurrence.",
+            "evidence": [
+              "outputRecords"
+            ],
+            "id": "unnest",
+            "knownAfter": [
+              "Final event relation"
+            ],
+            "knownBefore": [
+              "Collection-valued event field E"
+            ],
+            "operator": "Unnest",
+            "parameters": [],
+            "produces": [
+              "one tuple per event"
+            ],
+            "summary": "Emit one tuple per event"
+          }
+        ],
+        "videoFraction": 1.0
+      },
+      "o1": {
+        "expression": "Unnest_E ( Map_localize\u1d40(t,p)\u2192E ( R ) )",
+        "label": "Transcript-only",
+        "predictions": [
+          {
+            "confidence": 0.9,
+            "endSeconds": 473.15999999999997,
+            "endSegmentId": 131,
+            "evidence": "The lecturer uses two sticks to form a soap film, observes it, and notes when it breaks.",
+            "startSeconds": 415.88,
+            "startSegmentId": 117
+          }
+        ],
+        "stages": [
+          {
+            "consumes": [
+              "stored lecture record",
+              "event description p"
+            ],
+            "description": "Construct one input tuple containing the source-aligned transcript and the event description.",
+            "evidence": [
+              "transcript"
+            ],
+            "id": "input",
+            "knownAfter": [
+              "Timestamped transcript t"
+            ],
+            "knownBefore": [
+              "Lecture identifier",
+              "event description"
+            ],
+            "operator": "Input",
+            "parameters": [],
+            "produces": [
+              "R(source_id, t, p)"
+            ],
+            "summary": "Read the materialized transcript"
+          },
+          {
+            "consumes": [
+              "timestamped transcript t",
+              "event description p"
+            ],
+            "description": "Substitute transcript localization for video localization while preserving the event output schema.",
+            "evidence": [
+              "transcript",
+              "predictions"
+            ],
+            "id": "transcript-localize",
+            "knownAfter": [
+              "One broad transcript-derived event interval"
+            ],
+            "knownBefore": [
+              "Transcript text and source-time segments"
+            ],
+            "operator": "Transcript localize",
+            "parameters": [
+              "semantic function: localize\u1d40",
+              "video input: none"
+            ],
+            "produces": [
+              "event collection E"
+            ],
+            "summary": "Run a text-only MLLM"
+          },
+          {
+            "consumes": [
+              "event collection E"
+            ],
+            "description": "Expand the event collection into output tuples. Here, one 57-second semantic neighborhood contains both visible reference events.",
+            "evidence": [
+              "outputRecords"
+            ],
+            "id": "unnest",
+            "knownAfter": [
+              "Final event relation"
+            ],
+            "knownBefore": [
+              "Collection-valued event field E"
+            ],
+            "operator": "Unnest",
+            "parameters": [],
+            "produces": [
+              "one tuple per event"
+            ],
+            "summary": "Emit the transcript-derived interval"
+          }
+        ],
+        "videoFraction": 0.0
+      },
+      "o2": {
+        "expression": "Candidate\u1d40 \u2192 Window \u2192 Resolve \u2192 View \u2192 Localize\u1d20 \u2192 Reconcile",
+        "label": "Transcript \u2192 video",
+        "predictions": [
+          {
+            "confidence": 1.0,
+            "endSeconds": 439.18,
+            "endSegmentId": null,
+            "evidence": "The lecturer separates the two soap-coated sticks, creating an intact soap film, and then it ruptures.",
+            "startSeconds": 436.68,
+            "startSegmentId": null
+          },
+          {
+            "confidence": 1.0,
+            "endSeconds": 463.38,
+            "endSegmentId": null,
+            "evidence": "The lecturer separates the two soap-coated sticks, creating an intact soap film, and then it ruptures.",
+            "startSeconds": 459.38,
+            "startSegmentId": null
+          },
+          {
+            "confidence": 1.0,
+            "endSeconds": 482.38,
+            "endSegmentId": null,
+            "evidence": "The lecturer separates the two soap-coated sticks, creating an intact soap film, and then it ruptures.",
+            "startSeconds": 478.38,
+            "startSegmentId": null
+          }
+        ],
+        "stages": [
+          {
+            "consumes": [
+              "stored lecture record",
+              "event description p"
+            ],
+            "description": "Construct one input tuple containing the lecture video, its source-aligned transcript, and the event description.",
+            "evidence": [
+              "sourceMedia",
+              "transcriptAvailability"
+            ],
+            "id": "input",
+            "knownAfter": [
+              "Complete video v",
+              "timestamped transcript t"
+            ],
+            "knownBefore": [
+              "Lecture identifier",
+              "event description"
+            ],
+            "operator": "Input",
+            "parameters": [],
+            "produces": [
+              "R(source_id, v, t, p)"
+            ],
+            "summary": "Read video and aligned transcript"
+          },
+          {
+            "consumes": [
+              "timestamped transcript t",
+              "event description p"
+            ],
+            "description": "Use a query-conditioned text MLLM to identify transcript-grounded source-time ranges that may contain the requested visible event.",
+            "evidence": [
+              "transcript",
+              "candidateRange"
+            ],
+            "id": "candidate",
+            "knownAfter": [
+              "Unpadded candidate: 6:55.88\u20138:05.68"
+            ],
+            "knownBefore": [
+              "Transcript text and source-time segments"
+            ],
+            "operator": "Candidate",
+            "parameters": [
+              "objective: high recall",
+              "modality: text"
+            ],
+            "produces": [
+              "candidate range c"
+            ],
+            "summary": "Find a high-recall transcript range"
+          },
+          {
+            "consumes": [
+              "candidate range c"
+            ],
+            "description": "Expand the transcript-derived candidate with temporal context to cover possible speech\u2013video misalignment.",
+            "evidence": [
+              "windowTimeline"
+            ],
+            "id": "window",
+            "knownAfter": [
+              "Padded window: 6:25.88\u20138:35.68"
+            ],
+            "knownBefore": [
+              "Unpadded source-time candidate"
+            ],
+            "operator": "Window",
+            "parameters": [
+              "padding: 30 s before and after"
+            ],
+            "produces": [
+              "padded interval (s, e)"
+            ],
+            "summary": "Add temporal context"
+          },
+          {
+            "consumes": [
+              "padded candidate windows"
+            ],
+            "description": "Merge overlapping windows so the same source interval is not materialized or processed repeatedly.",
+            "evidence": [
+              "resolvedTimeline"
+            ],
+            "id": "resolve",
+            "knownAfter": [
+              "One disjoint 129.8-second window"
+            ],
+            "knownBefore": [
+              "One padded window in this trace"
+            ],
+            "operator": "Resolve",
+            "parameters": [
+              "equivalence: temporal overlap"
+            ],
+            "produces": [
+              "disjoint retained windows"
+            ],
+            "summary": "Coalesce overlapping windows"
+          },
+          {
+            "consumes": [
+              "video v",
+              "source boundaries (s, e)"
+            ],
+            "description": "Materialize the retained source interval as a standalone clip while preserving its source identifier and offset.",
+            "evidence": [
+              "materializedClip",
+              "retainedFraction"
+            ],
+            "id": "view",
+            "knownAfter": [
+              "129.8-second clip with source offset 6:25.88"
+            ],
+            "knownBefore": [
+              "One retained source-time window"
+            ],
+            "operator": "View",
+            "parameters": [
+              "retained video: 2.47%"
+            ],
+            "produces": [
+              "materialized clip v_c"
+            ],
+            "summary": "Materialize the retained interval"
+          },
+          {
+            "consumes": [
+              "materialized clip v_c",
+              "event description p"
+            ],
+            "description": "Apply the video event localizer to the retained clip, distinguishing separate visible occurrences within the broad transcript neighborhood.",
+            "evidence": [
+              "materializedClip",
+              "retainedFraction",
+              "predictions"
+            ],
+            "id": "video-localize",
+            "knownAfter": [
+              "Three clip-level predicted occurrences"
+            ],
+            "knownBefore": [
+              "Candidate clip and event description"
+            ],
+            "operator": "Video localize",
+            "parameters": [
+              "semantic function: localize\u1d20",
+              "video extent: 2.47%"
+            ],
+            "produces": [
+              "clip-relative event collection E_c"
+            ],
+            "summary": "Run the MLLM on the clip"
+          },
+          {
+            "consumes": [
+              "clip-relative events E_c",
+              "clip source offset"
+            ],
+            "description": "Translate clip-relative predictions back to source time and return the event collection expected by the original query.",
+            "evidence": [
+              "outputRecords"
+            ],
+            "id": "reconcile",
+            "knownAfter": [
+              "Final event relation in source time"
+            ],
+            "knownBefore": [
+              "Clip-relative predictions",
+              "source offset 6:25.88"
+            ],
+            "operator": "Reconcile",
+            "parameters": [
+              "mapping: source time = clip time + offset"
+            ],
+            "produces": [
+              "source-time event collection E"
+            ],
+            "summary": "Return source-time events"
+          }
+        ],
+        "videoFraction": 0.024722584117069787
+      }
+    },
+    "query": {
+      "id": "successful_large_soap_bubble",
+      "text": "Find every interval where the lecturer separates two soap-coated sticks and visibly creates a large, intact soap film or bubble that remains suspended between the sticks until it ruptures. Return the complete visible lifetime from formation through rupture. Partial or failed creation attempts, setup, and verbal discussion do not count."
+    },
+    "referenceEvents": [
+      {
+        "endSeconds": 441.0,
+        "startSeconds": 435.0
+      },
+      {
+        "endSeconds": 466.0,
+        "startSeconds": 460.0
+      }
+    ],
+    "source": {
+      "durationSeconds": 4945.301333,
+      "id": "mit_8_03sc_lecture_20",
+      "media": {
+        "kind": "youtube",
+        "pageUrl": "https://ocw.mit.edu/courses/8-03sc-physics-iii-vibrations-and-waves-fall-2016/resources/copy2_of_lecture-20-video/",
+        "thumbnailUrl": "https://i.ytimg.com/vi/VkbtIDSHfSc/hqdefault.jpg",
+        "youtubeId": "VkbtIDSHfSc"
+      },
+      "sha256": "b62a77f7715f926decca7241315662e1eaaa98b91b4bb54d12cfa2f1b816310b",
+      "title": "MIT 8.03SC Lecture 20: Interference, Soap Bubble"
+    },
+    "transcriptSegments": [
+      {
+        "endSeconds": 405.2,
+        "segmentId": 112,
+        "startSeconds": 398.0,
+        "text": "So before I start, I will show you a demonstration, which"
+      },
+      {
+        "endSeconds": 408.6,
+        "segmentId": 113,
+        "startSeconds": 405.2,
+        "text": "I'm not sure if that will be successful."
+      },
+      {
+        "endSeconds": 410.0,
+        "segmentId": 114,
+        "startSeconds": 408.6,
+        "text": "It's very difficult, actually."
+      },
+      {
+        "endSeconds": 412.2,
+        "segmentId": 115,
+        "startSeconds": 410.0,
+        "text": "And of course, during the break, you"
+      },
+      {
+        "endSeconds": 415.84000000000003,
+        "segmentId": 116,
+        "startSeconds": 412.2,
+        "text": "are welcome to come over and pray with all those demos."
+      },
+      {
+        "endSeconds": 422.71999999999997,
+        "segmentId": 117,
+        "startSeconds": 415.88,
+        "text": "So here I have two sticks, and I am going to create a soap bubble"
+      },
+      {
+        "endSeconds": 429.52,
+        "segmentId": 118,
+        "startSeconds": 422.71999999999997,
+        "text": "from this soap water and see if I will make it or not."
+      },
+      {
+        "endSeconds": 433.67999999999995,
+        "segmentId": 119,
+        "startSeconds": 429.52,
+        "text": "So basically, I put this into the soap water,"
+      },
+      {
+        "endSeconds": 438.84,
+        "segmentId": 120,
+        "startSeconds": 433.67999999999995,
+        "text": "and I will try to open it and to see if I can create a bubble."
+      },
+      {
+        "endSeconds": 440.32,
+        "segmentId": 121,
+        "startSeconds": 438.84,
+        "text": "Yeah."
+      },
+      {
+        "endSeconds": 445.52,
+        "segmentId": 122,
+        "startSeconds": 440.32,
+        "text": "You can see that there's a colorful soap bubble created."
+      },
+      {
+        "endSeconds": 448.47999999999996,
+        "segmentId": 123,
+        "startSeconds": 446.71999999999997,
+        "text": "Oh, OK."
+      },
+      {
+        "endSeconds": 450.52,
+        "segmentId": 124,
+        "startSeconds": 448.47999999999996,
+        "text": "You can see that it's not always easy."
+      },
+      {
+        "endSeconds": 456.96,
+        "segmentId": 125,
+        "startSeconds": 454.96,
+        "text": "Oh, it's getting very messy now."
+      },
+      {
+        "endSeconds": 459.91999999999996,
+        "segmentId": 126,
+        "startSeconds": 456.96,
+        "text": "I'm trying to destroy the classroom,"
+      },
+      {
+        "endSeconds": 464.52,
+        "segmentId": 127,
+        "startSeconds": 459.91999999999996,
+        "text": "but it's OK because we are in IT."
+      },
+      {
+        "endSeconds": 466.71999999999997,
+        "segmentId": 128,
+        "startSeconds": 464.52,
+        "text": "You can see that it's really beautiful."
+      },
+      {
+        "endSeconds": 468.52,
+        "segmentId": 129,
+        "startSeconds": 466.71999999999997,
+        "text": "It's colorful."
+      },
+      {
+        "endSeconds": 470.55999999999995,
+        "segmentId": 130,
+        "startSeconds": 468.52,
+        "text": "It did for a while."
+      },
+      {
+        "endSeconds": 473.15999999999997,
+        "segmentId": 131,
+        "startSeconds": 470.55999999999995,
+        "text": "Then it breaks."
+      },
+      {
+        "endSeconds": 476.08000000000004,
+        "segmentId": 132,
+        "startSeconds": 473.16,
+        "text": "So during the break, you are welcome to do this."
+      },
+      {
+        "endSeconds": 481.8,
+        "segmentId": 133,
+        "startSeconds": 476.08000000000004,
+        "text": "And it's actually not trivial to create this size of bubble."
+      },
+      {
+        "endSeconds": 485.68,
+        "segmentId": 134,
+        "startSeconds": 481.8,
+        "text": "So the success rate is like 50%."
+      },
+      {
+        "endSeconds": 492.8,
+        "segmentId": 135,
+        "startSeconds": 485.68,
+        "text": "OK, so as you can see from this demonstration,"
+      },
+      {
+        "endSeconds": 496.72,
+        "segmentId": 136,
+        "startSeconds": 492.8,
+        "text": "we see something really beautiful."
+      },
+      {
+        "endSeconds": 501.28000000000003,
+        "segmentId": 137,
+        "startSeconds": 496.72,
+        "text": "This bubble is colorful."
+      },
+      {
+        "endSeconds": 506.2,
+        "segmentId": 138,
+        "startSeconds": 501.28,
+        "text": "And I did actually shine this soap bubble"
+      }
+    ]
+  }
+}

@@ -4,6 +4,7 @@ dist-ssr
 test-results
 playwright-report
 site
+__pycache__/
 
 *.log
 *.local

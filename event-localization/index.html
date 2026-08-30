@@ -9,8 +9,8 @@
     />
     <meta name="repository" content="concord-db/demo" />
     <title>Concord · Cross-Modal Event Localization</title>
-    <link rel="stylesheet" href="./styles.css?v=3" />
-    <script src="./app.js?v=3" defer></script>
+    <link rel="stylesheet" href="./styles.css?v=4" />
+    <script type="module" src="./app.js?v=4"></script>
   </head>
   <body>
     <header class="site-header">
@@ -80,82 +80,17 @@
               <span>VRA</span>
               <code id="plan-expression">Loading recorded query…</code>
             </div>
-
-            <ol class="stage-list" id="stage-list" aria-label="Operator stages"></ol>
-
-            <div class="inspector-grid">
-              <div class="inspector-copy">
-                <span class="inspector-label">Now inspecting</span>
-                <h3 id="stage-title">Loading…</h3>
-                <p id="stage-description"></p>
-                <div class="stage-controls">
-                  <button class="icon-button" id="previous-stage" type="button">← Previous</button>
-                  <button class="button button-primary" id="replay-plan" type="button">Replay query</button>
-                  <button class="icon-button" id="next-stage" type="button">Next →</button>
-                </div>
+            <div class="execution-toolbar">
+              <div>
+                <span class="inspector-label">Recorded operator execution</span>
+                <strong id="execution-status" aria-live="polite">Ready to run</strong>
               </div>
-
-              <div class="source-view" aria-label="Source video timeline">
-                <div class="source-view-header">
-                  <div><span>Source video</span><strong>MIT 8.03 · Lecture 20</strong></div>
-                  <strong id="processed-duration">129.8 s retained</strong>
-                </div>
-                <div class="timeline-labels"><span>0:00</span><span>82:25</span></div>
-                <div class="timeline" id="source-timeline" aria-label="Complete lecture timeline">
-                  <div class="timeline-track"></div>
-                  <div class="timeline-window" id="candidate-window"></div>
-                  <div class="timeline-event event-one"></div>
-                  <div class="timeline-event event-two"></div>
-                </div>
-                <div class="timeline-legend">
-                  <span><i class="legend-window"></i>Processed video</span>
-                  <span><i class="legend-event"></i>Reference events</span>
-                </div>
+              <div class="stage-controls">
+                <button class="button button-primary" id="run-next-stage" type="button">Run Input</button>
+                <button class="icon-button" id="reset-plan" type="button">Reset</button>
               </div>
             </div>
-
-            <div class="evidence-grid">
-              <section class="evidence-panel transcript-panel" id="transcript-panel" aria-labelledby="transcript-heading">
-                <div class="panel-heading">
-                  <div><span>Source-aligned representation</span><h3 id="transcript-heading">Transcript evidence</h3></div>
-                  <span id="transcript-count">—</span>
-                </div>
-                <div class="candidate-rationale" id="candidate-rationale"></div>
-                <div class="transcript-scroll" id="transcript-segments"></div>
-              </section>
-
-              <section class="evidence-panel video-panel" id="video-panel" aria-labelledby="video-heading">
-                <div class="panel-heading">
-                  <div><span>Materialized View</span><h3 id="video-heading">Candidate clip</h3></div>
-                  <span id="clip-range">—</span>
-                </div>
-                <div class="video-frame">
-                  <video id="candidate-video" controls preload="metadata">
-                    <source src="./media/soap-bubble-candidate-v1.mp4" type="video/mp4" />
-                    Your browser does not support HTML video.
-                  </video>
-                  <div class="media-fallback" id="media-fallback" hidden>
-                    The recorded clip could not be loaded. Timeline and output records remain available below.
-                  </div>
-                </div>
-                <div class="detail-timeline" id="detail-timeline" aria-label="Candidate clip event timeline"></div>
-                <div class="detail-legend">
-                  <span><i class="legend-reference"></i>Reference</span>
-                  <span><i class="legend-prediction"></i>Prediction</span>
-                </div>
-                <p class="media-credit">
-                  Excerpt from MIT OpenCourseWare 8.03SC, Fall 2016. Candidate clip shown for research demonstration.
-                </p>
-              </section>
-
-              <section class="evidence-panel output-panel" aria-labelledby="output-heading">
-                <div class="panel-heading">
-                  <div><span>Operator output</span><h3 id="output-heading">Localized events</h3></div>
-                  <span id="prediction-count">—</span>
-                </div>
-                <div class="prediction-list" id="prediction-list"></div>
-              </section>
-            </div>
+            <ol class="operator-trace" id="operator-trace" aria-label="Step-by-step operator execution"></ol>
           </article>
         </div>
       </section>
@@ -164,8 +99,9 @@
         <div class="section-kicker">Published evaluation · Table 2</div>
         <h2>Less video, better localization</h2>
         <p class="results-intro">
-          All three queries use the same workload and output contract. Values
-          below are frozen publication results, not recomputed in the browser.
+          Values below are frozen aggregate results over
+          <strong id="evaluation-scope">the evaluated lecture workload</strong>,
+          not measurements recomputed from the single Lecture 20 trace above.
         </p>
 
         <div class="metric-spotlight">
