@@ -27,7 +27,14 @@ test("O2 reveals recorded artifacts only after their producing operators execute
   await expect(page.locator(".retained-meter")).toHaveCount(0);
 
   await page.locator("#run-next-stage").click();
-  await expect(page.locator(".retained-meter")).toContainText("2.47%");
+  await expect(page.locator(".retained-meter")).toContainText("2.62%");
+  await expect(page.locator(".retained-meter")).toContainText("6:25.9–8:35.7");
+  const retainedPosition = await page.locator(".retained-meter-fill").evaluate((element) => ({
+    left: parseFloat(element.style.left),
+    width: parseFloat(element.style.width),
+  }));
+  expect(retainedPosition.left).toBeCloseTo(7.8, 1);
+  expect(retainedPosition.width).toBeCloseTo(2.62, 1);
   await expect(page.locator("video")).toHaveAttribute("src", "./media/soap-bubble-candidate-v1.mp4");
   await expect(page.locator(".prediction-card")).toHaveCount(0);
 

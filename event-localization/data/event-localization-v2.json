@@ -419,7 +419,7 @@
             ],
             "operator": "View",
             "parameters": [
-              "retained video: 2.47%"
+              "retained video: 2.62%"
             ],
             "produces": [
               "materialized clip v_c"
@@ -447,7 +447,7 @@
             "operator": "Video localize",
             "parameters": [
               "semantic function: localize\u1d20",
-              "video extent: 2.47%"
+              "video extent: 2.62%"
             ],
             "produces": [
               "clip-relative event collection E_c"
@@ -481,7 +481,7 @@
             "summary": "Return source-time events"
           }
         ],
-        "videoFraction": 0.024722584117069787
+        "videoFraction": 0.02624713667776816
       }
     },
     "query": {

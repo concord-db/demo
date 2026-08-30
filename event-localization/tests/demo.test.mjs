@@ -59,6 +59,9 @@ test("retained-video evidence appears only at View or video localization", () =>
     plan.stages.filter((stage) => stage.evidence.includes("retainedFraction")).map((stage) => stage.id),
   ]));
   assert.deepEqual(evidenceStages, { baseline: ["video-localize"], o1: [], o2: ["view", "video-localize"] });
+  const traceFraction = trace.candidate.durationSeconds / trace.source.durationSeconds;
+  assert.ok(Math.abs(trace.plans.o2.videoFraction - traceFraction) < 1e-15);
+  assert.notEqual(trace.plans.o2.videoFraction, result("o2").videoFraction);
 });
 
 test("publication metrics remain exact", () => {
@@ -175,7 +178,8 @@ test("page exposes accessible query tabs and execution controls", async () => {
   assert.match(html, /id="run-next-stage"/);
   assert.match(html, /id="reset-plan"/);
   assert.match(html, /id="operator-trace"/);
-  assert.match(html, /styles\.css\?v=5/);
+  assert.match(html, /styles\.css\?v=6/);
+  assert.match(html, /app\.js\?v=5/);
   assert.match(css, /\.artifact-heading > div\s*\{[^}]*display:\s*flex;[^}]*flex-direction:\s*column;[^}]*gap:\s*4px;/);
   assert.match(app, /youtube-nocookie\.com/);
   assert.match(app, /preload: "metadata"/);

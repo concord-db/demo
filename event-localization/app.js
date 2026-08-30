@@ -184,18 +184,24 @@ function renderTimeline(kind) {
 
 function renderRetainedFraction() {
   const fraction = currentPlan().videoFraction;
+  const { source, materializedMedia } = data.trace;
+  const startSeconds = state.planId === "baseline" ? 0 : materializedMedia.sourceStartSeconds;
+  const endSeconds = state.planId === "baseline" ? source.durationSeconds : materializedMedia.sourceEndSeconds;
   const panel = artifactPanel("Video extent presented to the MLLM", `${formatVideoFraction(fraction)} of source video`, true);
   const meter = node("div", { className: "retained-meter" });
   const header = node("div", { className: "retained-meter-header" });
   header.append(
-    node("span", { text: state.planId === "baseline" ? "Complete lecture" : "Materialized candidate window" }),
+    node("span", { text: `${state.planId === "baseline" ? "Complete lecture" : "Materialized candidate window"} · ${formatClock(startSeconds, true)}–${formatClock(endSeconds, true)}` }),
     node("strong", { text: formatVideoFraction(fraction) }),
   );
   const track = node("div", { className: "retained-meter-track" });
   const fill = node("div", { className: "retained-meter-fill" });
+  fill.style.left = percent(startSeconds, source.durationSeconds);
   fill.style.width = formatVideoFraction(fraction);
   track.append(fill);
-  meter.append(header, track);
+  const axis = node("div", { className: "retained-meter-axis" });
+  axis.append(node("span", { text: "0:00" }), node("span", { text: formatClock(source.durationSeconds) }));
+  meter.append(header, track, axis);
   panel.append(meter);
   return panel;
 }
@@ -392,12 +398,12 @@ function renderResults() {
     fragment.append(row);
   });
   elements.resultsBody.replaceChildren(fragment);
-  const { plans } = data.trace;
+  const resultByPlan = Object.fromEntries(publication.results.map((result) => [result.planId, result]));
   const o2Result = publication.results.find((result) => result.planId === "o2");
   elements.evaluationScope.textContent = publication.scopeLabel;
-  elements.summaryVideo.textContent = `${formatVideoFraction(plans.baseline.videoFraction)} video`;
-  elements.summaryO1.textContent = `${formatVideoFraction(plans.o1.videoFraction)} video`;
-  elements.summaryO2.textContent = `${formatVideoFraction(plans.o2.videoFraction)} video`;
+  elements.summaryVideo.textContent = `${formatVideoFraction(resultByPlan.baseline.videoFraction)} video`;
+  elements.summaryO1.textContent = `${formatVideoFraction(resultByPlan.o1.videoFraction)} video`;
+  elements.summaryO2.textContent = `${formatVideoFraction(resultByPlan.o2.videoFraction)} video`;
   elements.metricVideo.textContent = formatVideoFraction(publication.candidateMetrics.selectivity);
   elements.metricRecall.textContent = `${(publication.candidateMetrics.recall * 100).toFixed(0)}%`;
   elements.metricCost.textContent = `−${(publication.summary.costReductionFraction * 100).toFixed(1)}%`;

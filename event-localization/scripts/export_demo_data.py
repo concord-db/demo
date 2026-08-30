@@ -104,7 +104,7 @@ def stage(
     }
 
 
-def build_plan_content() -> dict[str, dict[str, Any]]:
+def build_plan_content(trace_video_fraction: float) -> dict[str, dict[str, Any]]:
     return {
         "baseline": {
             "label": "Video-only",
@@ -225,7 +225,7 @@ def build_plan_content() -> dict[str, dict[str, Any]]:
                     known_before=["One retained source-time window"],
                     known_after=["129.8-second clip with source offset 6:25.88"],
                     evidence=["materializedClip", "retainedFraction"],
-                    parameters=["retained video: 2.47%"],
+                    parameters=[f"retained video: {trace_video_fraction:.2%}"],
                 ),
                 stage(
                     "video-localize", "Video localize", "Run the MLLM on the clip",
@@ -235,7 +235,7 @@ def build_plan_content() -> dict[str, dict[str, Any]]:
                     known_before=["Candidate clip and event description"],
                     known_after=["Three clip-level predicted occurrences"],
                     evidence=["materializedClip", "retainedFraction", "predictions"],
-                    parameters=["semantic function: localizeᴠ", "video extent: 2.47%"],
+                    parameters=["semantic function: localizeᴠ", f"video extent: {trace_video_fraction:.2%}"],
                 ),
                 stage(
                     "reconcile", "Reconcile", "Return source-time events",
@@ -281,23 +281,30 @@ def build_artifact(mmds_root: Path, media_path: Path) -> dict[str, Any]:
     ]
 
     methods = comparison["methods"]
+    trace_video_fraction = candidate_window["duration_seconds"] / pair["duration_seconds"]
     plan_sources = {
-        "baseline": ("naive", experiment_root / "runs/naive/predictions.json", 1.0),
-        "o1": ("transcript_only", experiment_root / "runs/transcript_only/predictions.json", 0.0),
-        "o2": ("transcript_video", experiment_root / "runs/transcript_video/predictions.json", methods["transcript_video"]["candidate_metrics"]["candidate_selectivity"]),
+        "baseline": ("naive", experiment_root / "runs/naive/predictions.json"),
+        "o1": ("transcript_only", experiment_root / "runs/transcript_only/predictions.json"),
+        "o2": ("transcript_video", experiment_root / "runs/transcript_video/predictions.json"),
     }
-    plans = build_plan_content()
+    trace_video_fractions = {"baseline": 1.0, "o1": 0.0, "o2": trace_video_fraction}
+    publication_video_fractions = {
+        "baseline": 1.0,
+        "o1": 0.0,
+        "o2": methods["transcript_video"]["candidate_metrics"]["candidate_selectivity"],
+    }
+    plans = build_plan_content(trace_video_fraction)
     results: list[dict[str, Any]] = []
 
-    for plan_id, (method_id, prediction_path, video_fraction) in plan_sources.items():
+    for plan_id, (method_id, prediction_path) in plan_sources.items():
         method = methods[method_id]
         accuracy = method["primary_accuracy"]
-        plans[plan_id]["videoFraction"] = video_fraction
+        plans[plan_id]["videoFraction"] = trace_video_fractions[plan_id]
         plans[plan_id]["predictions"] = select_predictions(load_json(prediction_path))
         results.append({
             "planId": plan_id,
             "label": plans[plan_id]["label"],
-            "videoFraction": video_fraction,
+            "videoFraction": publication_video_fractions[plan_id],
             "precision": accuracy["precision"],
             "recall": accuracy["recall"],
             "f1": accuracy["f1"],
