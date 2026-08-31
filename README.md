@@ -2,13 +2,13 @@
 
 A single website hosting the recorded demos for **Concord: A Video Relational
 Algebra for Cross-Modal Query Optimization** (CIDR 2027). Neither demo runs a
-model in the browser or requires an API key — both replay versioned MP4 and JSON
+model in the browser or requires an API key — both expose versioned JSON and media
 artifacts exported from [`chanwutk/mmds`](https://github.com/chanwutk/mmds).
 
 | Path | Demo | Rewrites | Stack |
 | --- | --- | --- | --- |
 | `/` | Landing page | — | Static HTML/CSS |
-| `/event-localization/` | Lecture event localization | O1 modality substitution, O2 temporal candidate pushdown | Vanilla JS, no dependencies |
+| `/event-localization/` | Lecture and soccer event localization | O1 modality substitution, O2 temporal candidate pushdown | Vanilla JS, no dependencies |
 | `/cross-camera/` | Cross-camera vehicle association | O3 detect → track → join | React + Vite + TypeScript |
 
 Each demo keeps its own build, tests, and data exporter, so they can be worked
@@ -49,7 +49,7 @@ This writes the combined site to `site/` (gitignored) and serves it at
 ## Validation
 
 ```bash
-cd event-localization && node --test tests/*.test.mjs
+cd event-localization && npm test && npm run test:e2e
 cd cross-camera && npm test && npm run build
 ```
 
@@ -71,5 +71,8 @@ to `main`.
 ## Data attribution
 
 - Event localization: MIT OpenCourseWare 8.03SC, Fall 2016.
+- Soccer goal localization: SoccerNet. Broadcast media is not redistributed by
+  this public demo; only derived transcripts, timestamps, and aggregate results
+  are included.
 - Cross-camera: I24V/I-24 MOTION dataset — Gloudemans et al., "So You Think You
   Can Track?", WACV 2024. See <https://i24motion.org/data> for access terms.

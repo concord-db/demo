@@ -1,4 +1,16 @@
 {
+  "example": {
+    "candidateCoverageLabel": "4 of 4 events covered",
+    "id": "lecture",
+    "primaryMetricLabel": "at tIoU \u2265 .3",
+    "resultsCaption": "Lecture event-localization results at the primary tIoU threshold.",
+    "resultsTitle": "Less video, better localization",
+    "selectorLabel": "Lecture",
+    "sourceArtifactTitle": "Complete lecture video",
+    "sourceTypeLabel": "lecture",
+    "title": "Lecture event localization",
+    "traceScope": "the single Lecture 20 trace above"
+  },
   "publicationEvaluation": {
     "candidateMetrics": {
       "recall": 1.0,
@@ -56,28 +68,36 @@
       "referenceEventCount": 4
     }
   },
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "trace": {
-    "candidate": {
-      "confidence": 0.9,
-      "durationSeconds": 129.80000000000007,
-      "endSeconds": 515.6800000000001,
-      "endSegmentId": 134,
-      "evidence": "The lecturer describes and executes a demonstration using two sticks in soap water to create and maintain a soap bubble until it ruptures.",
-      "startSeconds": 385.88,
-      "startSegmentId": 117,
-      "unpaddedEndSeconds": 485.68,
-      "unpaddedStartSeconds": 415.88
-    },
+    "candidateWindows": [
+      {
+        "confidence": 0.9,
+        "durationSeconds": 129.80000000000007,
+        "endSeconds": 515.6800000000001,
+        "endSegmentId": 134,
+        "evidence": "The lecturer describes and executes a demonstration using two sticks in soap water to create and maintain a soap bubble until it ruptures.",
+        "startSeconds": 385.88,
+        "startSegmentId": 117,
+        "unpaddedEndSeconds": 485.68,
+        "unpaddedStartSeconds": 415.88,
+        "windowId": "lecture-window-0"
+      }
+    ],
+    "eventKind": "interval",
     "experiment": "cross_modal_lecture_verified_3pair_v1",
-    "materializedMedia": {
-      "expectedDurationSeconds": 129.8297,
-      "kind": "file",
-      "sha256": "1bcb64c04e714b8ce638dd4b2b7e059fb06582fca25ee192fea15feb4735d1aa",
-      "sourceEndSeconds": 515.6800000000001,
-      "sourceStartSeconds": 385.88,
-      "url": "./media/soap-bubble-candidate-v1.mp4"
-    },
+    "materializedClips": [
+      {
+        "clipId": "lecture-clip-0",
+        "expectedDurationSeconds": 129.8297,
+        "kind": "file",
+        "sha256": "1bcb64c04e714b8ce638dd4b2b7e059fb06582fca25ee192fea15feb4735d1aa",
+        "sourceEndSeconds": 515.6800000000001,
+        "sourceStartSeconds": 385.88,
+        "url": "./media/soap-bubble-candidate-v1.mp4",
+        "windowId": "lecture-window-0"
+      }
+    ],
     "plans": {
       "baseline": {
         "expression": "Unnest_E ( Map_localize\u1d20(v,p)\u2192E ( R ) )",
@@ -87,6 +107,7 @@
             "confidence": 1.0,
             "endSeconds": 468.0,
             "endSegmentId": null,
+            "eventKind": "interval",
             "evidence": "The lecturer creates a soap film by pulling apart two sticks, which then remains suspended for a short duration until it breaks.",
             "startSeconds": 436.0,
             "startSegmentId": null
@@ -95,6 +116,7 @@
             "confidence": 0.8,
             "endSeconds": 485.0,
             "endSegmentId": null,
+            "eventKind": "interval",
             "evidence": "The lecturer pulls apart two sticks to create a soap film which remains suspended briefly before breaking.",
             "startSeconds": 478.0,
             "startSegmentId": null
@@ -187,6 +209,7 @@
             "confidence": 0.9,
             "endSeconds": 473.15999999999997,
             "endSegmentId": 131,
+            "eventKind": "interval",
             "evidence": "The lecturer uses two sticks to form a soap film, observes it, and notes when it breaks.",
             "startSeconds": 415.88,
             "startSegmentId": 117
@@ -274,25 +297,31 @@
         "label": "Transcript \u2192 video",
         "predictions": [
           {
+            "clipId": "lecture-clip-0",
             "confidence": 1.0,
             "endSeconds": 439.18,
             "endSegmentId": null,
+            "eventKind": "interval",
             "evidence": "The lecturer separates the two soap-coated sticks, creating an intact soap film, and then it ruptures.",
             "startSeconds": 436.68,
             "startSegmentId": null
           },
           {
+            "clipId": "lecture-clip-0",
             "confidence": 1.0,
             "endSeconds": 463.38,
             "endSegmentId": null,
+            "eventKind": "interval",
             "evidence": "The lecturer separates the two soap-coated sticks, creating an intact soap film, and then it ruptures.",
             "startSeconds": 459.38,
             "startSegmentId": null
           },
           {
+            "clipId": "lecture-clip-0",
             "confidence": 1.0,
             "endSeconds": 482.38,
             "endSegmentId": null,
+            "eventKind": "interval",
             "evidence": "The lecturer separates the two soap-coated sticks, creating an intact soap film, and then it ruptures.",
             "startSeconds": 478.38,
             "startSegmentId": null
@@ -491,10 +520,12 @@
     "referenceEvents": [
       {
         "endSeconds": 441.0,
+        "eventKind": "interval",
         "startSeconds": 435.0
       },
       {
         "endSeconds": 466.0,
+        "eventKind": "interval",
         "startSeconds": 460.0
       }
     ],

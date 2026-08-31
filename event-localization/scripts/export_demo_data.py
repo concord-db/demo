@@ -4,44 +4,15 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
-import json
 from pathlib import Path
 from typing import Any
+
+from artifact_helpers import load_json, load_jsonl, sha256, stage, write_artifact
 
 
 EXPERIMENT = "cross_modal_lecture_verified_3pair_v1"
 LECTURE_ID = "mit_8_03sc_lecture_20"
 QUERY_ID = "successful_large_soap_bubble"
-
-
-def load_json(path: Path) -> dict[str, Any]:
-    with path.open(encoding="utf-8") as stream:
-        value = json.load(stream)
-    if not isinstance(value, dict):
-        raise ValueError(f"Expected an object in {path}")
-    return value
-
-
-def load_jsonl(path: Path) -> list[dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
-    with path.open(encoding="utf-8") as stream:
-        for line_number, line in enumerate(stream, start=1):
-            if not line.strip():
-                continue
-            value = json.loads(line)
-            if not isinstance(value, dict):
-                raise ValueError(f"Expected an object at {path}:{line_number}")
-            rows.append(value)
-    return rows
-
-
-def sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as stream:
-        for block in iter(lambda: stream.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def select_pair(rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -65,6 +36,7 @@ def select_predictions(document: dict[str, Any]) -> list[dict[str, Any]]:
     ]
     return [
         {
+            "eventKind": "interval",
             "startSeconds": prediction["start_seconds"],
             "endSeconds": prediction["end_seconds"],
             "confidence": prediction["confidence"],
@@ -74,34 +46,6 @@ def select_predictions(document: dict[str, Any]) -> list[dict[str, Any]]:
         }
         for prediction in selected
     ]
-
-
-def stage(
-    stage_id: str,
-    operator: str,
-    summary: str,
-    description: str,
-    *,
-    consumes: list[str],
-    produces: list[str],
-    known_before: list[str],
-    known_after: list[str],
-    evidence: list[str],
-    parameters: list[str] | None = None,
-) -> dict[str, Any]:
-    """Build one explicit, renderer-independent operator-stage contract."""
-    return {
-        "id": stage_id,
-        "operator": operator,
-        "summary": summary,
-        "description": description,
-        "consumes": consumes,
-        "produces": produces,
-        "knownBefore": known_before,
-        "knownAfter": known_after,
-        "evidence": evidence,
-        "parameters": parameters or [],
-    }
 
 
 def build_plan_content(trace_video_fraction: float) -> dict[str, dict[str, Any]]:
@@ -301,6 +245,9 @@ def build_artifact(mmds_root: Path, media_path: Path) -> dict[str, Any]:
         accuracy = method["primary_accuracy"]
         plans[plan_id]["videoFraction"] = trace_video_fractions[plan_id]
         plans[plan_id]["predictions"] = select_predictions(load_json(prediction_path))
+        if plan_id == "o2":
+            for prediction in plans[plan_id]["predictions"]:
+                prediction["clipId"] = "lecture-clip-0"
         results.append({
             "planId": plan_id,
             "label": plans[plan_id]["label"],
@@ -320,6 +267,7 @@ def build_artifact(mmds_root: Path, media_path: Path) -> dict[str, Any]:
 
     trace = {
         "experiment": EXPERIMENT,
+        "eventKind": "interval",
         "query": {"id": QUERY_ID, "text": candidate["query_text"]},
         "source": {
             "id": LECTURE_ID,
@@ -333,7 +281,8 @@ def build_artifact(mmds_root: Path, media_path: Path) -> dict[str, Any]:
                 "thumbnailUrl": "https://i.ytimg.com/vi/VkbtIDSHfSc/hqdefault.jpg",
             },
         },
-        "candidate": {
+        "candidateWindows": [{
+            "windowId": "lecture-window-0",
             "startSeconds": candidate_window["start_seconds"],
             "endSeconds": candidate_window["end_seconds"],
             "durationSeconds": candidate_window["duration_seconds"],
@@ -343,17 +292,19 @@ def build_artifact(mmds_root: Path, media_path: Path) -> dict[str, Any]:
             "endSegmentId": segment_range["end_segment_id"],
             "confidence": segment_range["confidence"],
             "evidence": segment_range["evidence"],
-        },
-        "materializedMedia": {
+        }],
+        "materializedClips": [{
+            "clipId": "lecture-clip-0",
+            "windowId": "lecture-window-0",
             "kind": "file",
             "url": "./media/soap-bubble-candidate-v1.mp4",
             "sourceStartSeconds": clip_row["source_start_seconds"],
             "sourceEndSeconds": clip_row["source_end_seconds"],
             "expectedDurationSeconds": clip_row["media"]["duration_seconds"],
             "sha256": sha256(media_path),
-        },
+        }],
         "referenceEvents": [
-            {"startSeconds": event["start_seconds"], "endSeconds": event["end_seconds"]}
+            {"eventKind": "interval", "startSeconds": event["start_seconds"], "endSeconds": event["end_seconds"]}
             for event in pair["events"]
         ],
         "transcriptSegments": transcript_segments,
@@ -383,7 +334,19 @@ def build_artifact(mmds_root: Path, media_path: Path) -> dict[str, Any]:
         },
     }
     return {
-        "schemaVersion": 2,
+        "schemaVersion": 3,
+        "example": {
+            "id": "lecture",
+            "selectorLabel": "Lecture",
+            "title": "Lecture event localization",
+            "sourceArtifactTitle": "Complete lecture video",
+            "sourceTypeLabel": "lecture",
+            "traceScope": "the single Lecture 20 trace above",
+            "resultsTitle": "Less video, better localization",
+            "resultsCaption": "Lecture event-localization results at the primary tIoU threshold.",
+            "primaryMetricLabel": "at tIoU ≥ .3",
+            "candidateCoverageLabel": "4 of 4 events covered",
+        },
         "trace": trace,
         "publicationEvaluation": publication_evaluation,
     }
@@ -392,15 +355,13 @@ def build_artifact(mmds_root: Path, media_path: Path) -> dict[str, Any]:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--mmds-root", required=True, type=Path)
-    parser.add_argument("--output", type=Path, default=Path("data/event-localization-v2.json"))
+    parser.add_argument("--output", type=Path, default=Path("data/lecture-event-localization-v3.json"))
     parser.add_argument("--media", type=Path, default=Path("media/soap-bubble-candidate-v1.mp4"))
+    parser.add_argument("--check", action="store_true", help="Fail unless the committed artifact is current")
     args = parser.parse_args()
 
     artifact = build_artifact(args.mmds_root.resolve(), args.media.resolve())
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    with args.output.open("w", encoding="utf-8") as stream:
-        json.dump(artifact, stream, indent=2, sort_keys=True)
-        stream.write("\n")
+    write_artifact(artifact, args.output, check=args.check)
 
 
 if __name__ == "__main__":

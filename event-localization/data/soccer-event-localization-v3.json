@@ -1,0 +1,878 @@
+{
+  "example": {
+    "candidateCoverageLabel": "10 of 10 goals covered",
+    "id": "soccer",
+    "primaryMetricLabel": "at \u00b130 s tolerance",
+    "resultsCaption": "Soccer goal-localization results at the primary \u00b130-second tolerance.",
+    "resultsTitle": "Less video, precise goal timestamps",
+    "selectorLabel": "Soccer",
+    "sourceArtifactTitle": "Complete match-half video",
+    "sourceTypeLabel": "match half",
+    "title": "Soccer goal localization",
+    "traceScope": "the Everton\u2013Chelsea first-half trace above"
+  },
+  "publicationEvaluation": {
+    "candidateMetrics": {
+      "recall": 1.0,
+      "selectivity": 0.0532017335896862
+    },
+    "provenance": {
+      "candidateSha256": "f08121d78eda4b40304c9d9cf075c16de196f4ee638332479d842b47e372473b",
+      "clipManifestSha256": "2e84b2c2c6e6f87c1521739a9b80b51852df46178ba8c70fc2eef09860b512c1",
+      "comparisonSha256": "b5e5f8ee3619fdcd4b19df9b0f74da4e8c345bd2c85118b5cba7ee9f3cf9c7fc",
+      "groundTruthSha256": "8ffc031bbb22783bfcc323ac2517c05fbf9ffd769695088ccf0998ff31bfd348",
+      "inputSha256": "8e025bffa85fedfec660a6a8c2de95b4cfd8c6112160a3d6d902dea5bc4fae48"
+    },
+    "results": [
+      {
+        "costUsd": 0.37751175,
+        "f1": 0.8181818181818182,
+        "label": "Video-only",
+        "planId": "baseline",
+        "precision": 0.75,
+        "recall": 0.9,
+        "timeSeconds": 712.3377121249214,
+        "tokenCount": 1506097,
+        "videoFraction": 1.0
+      },
+      {
+        "costUsd": 0.034,
+        "f1": 0.9523809523809523,
+        "label": "Transcript-only",
+        "planId": "o1",
+        "precision": 0.9090909090909091,
+        "recall": 1.0,
+        "timeSeconds": 6.265903166029602,
+        "tokenCount": 132370,
+        "videoFraction": 0.0
+      },
+      {
+        "costUsd": 0.056638999999999995,
+        "f1": 0.9523809523809523,
+        "label": "Transcript \u2192 video",
+        "planId": "o2",
+        "precision": 0.9090909090909091,
+        "recall": 1.0,
+        "timeSeconds": 135.82663633208722,
+        "tokenCount": 216986,
+        "videoFraction": 0.0532017335896862
+      }
+    ],
+    "scopeLabel": "Three SoccerNet games (six match halves)",
+    "summary": {
+      "costReductionFraction": 0.8499675837904384
+    },
+    "workload": {
+      "gameCount": 3,
+      "primaryToleranceSeconds": 30.0,
+      "referenceEventCount": 10,
+      "sourceVideoCount": 6
+    }
+  },
+  "schemaVersion": 3,
+  "trace": {
+    "candidateWindows": [
+      {
+        "confidence": 1.0,
+        "durationSeconds": 60.0,
+        "endSeconds": 1008.0,
+        "endSegmentId": 277,
+        "evidence": "Naismith has come off the bench to score the opening goal against Chelsea",
+        "startSeconds": 948.0,
+        "startSegmentId": 277,
+        "unpaddedEndSeconds": 983.0,
+        "unpaddedStartSeconds": 978.0,
+        "windowId": "soccer-window-0"
+      },
+      {
+        "confidence": 1.0,
+        "durationSeconds": 60.0,
+        "endSeconds": 1309.0,
+        "endSegmentId": 348,
+        "evidence": "Naismith with another one, and Everton double the lead",
+        "startSeconds": 1249.0,
+        "startSegmentId": 348,
+        "unpaddedEndSeconds": 1283.0,
+        "unpaddedStartSeconds": 1279.0,
+        "windowId": "soccer-window-1"
+      },
+      {
+        "confidence": 1.0,
+        "durationSeconds": 60.0,
+        "endSeconds": 2142.0,
+        "endSegmentId": 572,
+        "evidence": "What a strike from Matic! And Chelsea back in it.",
+        "startSeconds": 2082.0,
+        "startSegmentId": 572,
+        "unpaddedEndSeconds": 2116.0,
+        "unpaddedStartSeconds": 2112.0,
+        "windowId": "soccer-window-2"
+      }
+    ],
+    "eventKind": "point",
+    "experiment": "goal_pushdown_3_games_v4_materialized",
+    "materializedClips": [
+      {
+        "clipId": "soccer-clip-0",
+        "expectedDurationSeconds": 60.0,
+        "kind": "unavailable",
+        "reason": "SoccerNet broadcast media is not redistributed in this public demo.",
+        "sha256": "e1379acd3d6dbd200296b8f99c1c323d83a1a3782f242ac131e54adc30522390",
+        "sizeBytes": 5974657,
+        "sourceEndSeconds": 1008.0,
+        "sourceStartSeconds": 948.0,
+        "windowId": "soccer-window-0"
+      },
+      {
+        "clipId": "soccer-clip-1",
+        "expectedDurationSeconds": 60.0,
+        "kind": "unavailable",
+        "reason": "SoccerNet broadcast media is not redistributed in this public demo.",
+        "sha256": "c0bc24442011c19336f959f26d455116f142238029cba9c25d2adbc674f45678",
+        "sizeBytes": 7017630,
+        "sourceEndSeconds": 1309.0,
+        "sourceStartSeconds": 1249.0,
+        "windowId": "soccer-window-1"
+      },
+      {
+        "clipId": "soccer-clip-2",
+        "expectedDurationSeconds": 60.0,
+        "kind": "unavailable",
+        "reason": "SoccerNet broadcast media is not redistributed in this public demo.",
+        "sha256": "57e5e3dcd584a3facab35bfb36691a0748cb290e3f668e3adecfaf96b50bb665",
+        "sizeBytes": 6271111,
+        "sourceEndSeconds": 2142.0,
+        "sourceStartSeconds": 2082.0,
+        "windowId": "soccer-window-2"
+      }
+    ],
+    "plans": {
+      "baseline": {
+        "expression": "Unnest_E ( Map_localize\u1d20(v,p)\u2192E ( R ) )",
+        "label": "Video-only",
+        "predictions": [
+          {
+            "confidence": 1.0,
+            "eventKind": "point",
+            "evidence": "Naismith scores the first goal for Everton with a header.",
+            "timeSeconds": 977.0
+          },
+          {
+            "confidence": 1.0,
+            "eventKind": "point",
+            "evidence": "Naismith scores his second goal for Everton with a long-distance strike.",
+            "timeSeconds": 1280.0
+          },
+          {
+            "confidence": 1.0,
+            "eventKind": "point",
+            "evidence": "Matic scores for Chelsea with a powerful strike from outside the box.",
+            "timeSeconds": 2110.0
+          }
+        ],
+        "stages": [
+          {
+            "consumes": [
+              "stored match-half record",
+              "event description p"
+            ],
+            "description": "Construct one input tuple containing the complete match-half video and the goal description.",
+            "evidence": [
+              "sourceMedia"
+            ],
+            "id": "input",
+            "knownAfter": [
+              "Complete 45-minute source video v"
+            ],
+            "knownBefore": [
+              "Match-half identifier",
+              "goal description"
+            ],
+            "operator": "Input",
+            "parameters": [],
+            "produces": [
+              "R(source_id, v, p)"
+            ],
+            "summary": "Read the complete match half"
+          },
+          {
+            "consumes": [
+              "complete video v",
+              "event description p"
+            ],
+            "description": "Apply the video goal localizer to the complete match-half video.",
+            "evidence": [
+              "sourceMedia",
+              "retainedFraction",
+              "predictions"
+            ],
+            "id": "video-localize",
+            "knownAfter": [
+              "Predicted goal timestamps in source time"
+            ],
+            "knownBefore": [
+              "Full source video",
+              "requested goal event"
+            ],
+            "operator": "Video localize",
+            "parameters": [
+              "video extent: 100%",
+              "semantic function: localize\u1d20"
+            ],
+            "produces": [
+              "goal timestamp collection E"
+            ],
+            "summary": "Run the MLLM over the full match half"
+          },
+          {
+            "consumes": [
+              "goal timestamp collection E"
+            ],
+            "description": "Expand the collection into one source-time output tuple for each localized goal.",
+            "evidence": [
+              "outputRecords"
+            ],
+            "id": "unnest",
+            "knownAfter": [
+              "Final goal relation"
+            ],
+            "knownBefore": [
+              "Collection-valued event field E"
+            ],
+            "operator": "Unnest",
+            "parameters": [],
+            "produces": [
+              "one tuple per goal"
+            ],
+            "summary": "Emit one tuple per goal"
+          }
+        ],
+        "videoFraction": 1.0
+      },
+      "o1": {
+        "expression": "Unnest_E ( Map_localize\u1d40(t,p)\u2192E ( R ) )",
+        "label": "Transcript-only",
+        "predictions": [
+          {
+            "confidence": 1.0,
+            "eventKind": "point",
+            "evidence": "Naismith has come off the fence to score the opening goal against Chelsea",
+            "timeSeconds": 978.0
+          },
+          {
+            "confidence": 1.0,
+            "eventKind": "point",
+            "evidence": "Here's Neismith with another one, and Hamilton double the lead",
+            "timeSeconds": 1279.0
+          },
+          {
+            "confidence": 1.0,
+            "eventKind": "point",
+            "evidence": "Matic is going to try. Look here, and he hits an absolute beauty! What a strike from Matic! And Chelsea back in it.",
+            "timeSeconds": 2109.0
+          }
+        ],
+        "stages": [
+          {
+            "consumes": [
+              "stored match-half record",
+              "event description p"
+            ],
+            "description": "Construct one input tuple containing the source-aligned commentary transcript and the goal description.",
+            "evidence": [
+              "transcript"
+            ],
+            "id": "input",
+            "knownAfter": [
+              "Timestamped commentary transcript t"
+            ],
+            "knownBefore": [
+              "Match-half identifier",
+              "goal description"
+            ],
+            "operator": "Input",
+            "parameters": [],
+            "produces": [
+              "R(source_id, t, p)"
+            ],
+            "summary": "Read the materialized transcript"
+          },
+          {
+            "consumes": [
+              "timestamped transcript t",
+              "event description p"
+            ],
+            "description": "Substitute commentary-transcript localization for video localization while preserving the timestamp output schema.",
+            "evidence": [
+              "transcript",
+              "predictions"
+            ],
+            "id": "transcript-localize",
+            "knownAfter": [
+              "Three transcript-derived goal timestamps"
+            ],
+            "knownBefore": [
+              "Commentary text and source-time segments"
+            ],
+            "operator": "Transcript localize",
+            "parameters": [
+              "semantic function: localize\u1d40",
+              "video input: none"
+            ],
+            "produces": [
+              "goal timestamp collection E"
+            ],
+            "summary": "Run a text-only MLLM"
+          },
+          {
+            "consumes": [
+              "goal timestamp collection E"
+            ],
+            "description": "Expand the collection into one output tuple per predicted goal.",
+            "evidence": [
+              "outputRecords"
+            ],
+            "id": "unnest",
+            "knownAfter": [
+              "Final goal relation"
+            ],
+            "knownBefore": [
+              "Collection-valued event field E"
+            ],
+            "operator": "Unnest",
+            "parameters": [],
+            "produces": [
+              "one tuple per goal"
+            ],
+            "summary": "Emit transcript-derived timestamps"
+          }
+        ],
+        "videoFraction": 0.0
+      },
+      "o2": {
+        "expression": "Candidate\u1d40 \u2192 Window \u2192 Resolve \u2192 View \u2192 Localize\u1d20 \u2192 Reconcile",
+        "label": "Transcript \u2192 video",
+        "predictions": [
+          {
+            "clipId": "soccer-clip-0",
+            "confidence": 1.0,
+            "eventKind": "point",
+            "evidence": "The player Steven Naismith scores a goal for Everton by shooting the ball into the net in the 29th second.",
+            "timeSeconds": 977.5
+          },
+          {
+            "clipId": "soccer-clip-1",
+            "confidence": 1.0,
+            "eventKind": "point",
+            "evidence": "Steven Naismith scores a goal for Everton, heading the ball into the net in live action.",
+            "timeSeconds": 1280.8
+          },
+          {
+            "clipId": "soccer-clip-2",
+            "confidence": 1.0,
+            "eventKind": "point",
+            "evidence": "Nemanja Matic scores a goal for Chelsea with a long-range strike that flies into the top corner of the net.",
+            "timeSeconds": 2110.5
+          }
+        ],
+        "stages": [
+          {
+            "consumes": [
+              "stored match-half record",
+              "event description p"
+            ],
+            "description": "Construct one input tuple containing the match-half video, its source-aligned commentary transcript, and the goal description.",
+            "evidence": [
+              "sourceMedia",
+              "transcriptAvailability"
+            ],
+            "id": "input",
+            "knownAfter": [
+              "Complete video v",
+              "timestamped transcript t"
+            ],
+            "knownBefore": [
+              "Match-half identifier",
+              "goal description"
+            ],
+            "operator": "Input",
+            "parameters": [],
+            "produces": [
+              "R(source_id, v, t, p)"
+            ],
+            "summary": "Read video and aligned transcript"
+          },
+          {
+            "consumes": [
+              "timestamped transcript t",
+              "event description p"
+            ],
+            "description": "Use a query-conditioned text MLLM to identify source-time commentary moments that may indicate goals.",
+            "evidence": [
+              "transcript",
+              "candidateRange"
+            ],
+            "id": "candidate",
+            "knownAfter": [
+              "Three transcript-grounded candidate moments"
+            ],
+            "knownBefore": [
+              "Commentary text and source-time segments"
+            ],
+            "operator": "Candidate",
+            "parameters": [
+              "objective: high recall",
+              "modality: text"
+            ],
+            "produces": [
+              "candidate moments C"
+            ],
+            "summary": "Find high-recall commentary moments"
+          },
+          {
+            "consumes": [
+              "candidate moments C"
+            ],
+            "description": "Add 30 seconds of source-video context before and after each transcript-derived candidate moment.",
+            "evidence": [
+              "windowTimeline"
+            ],
+            "id": "window",
+            "knownAfter": [
+              "Three 60-second source-time windows"
+            ],
+            "knownBefore": [
+              "Three unpadded source-time candidates"
+            ],
+            "operator": "Window",
+            "parameters": [
+              "padding: 30 s before and after"
+            ],
+            "produces": [
+              "padded intervals (s, e)"
+            ],
+            "summary": "Add temporal context"
+          },
+          {
+            "consumes": [
+              "padded candidate windows"
+            ],
+            "description": "Merge overlapping windows so a source interval is not materialized or processed repeatedly.",
+            "evidence": [
+              "resolvedTimeline"
+            ],
+            "id": "resolve",
+            "knownAfter": [
+              "Three disjoint retained windows"
+            ],
+            "knownBefore": [
+              "Three padded windows"
+            ],
+            "operator": "Resolve",
+            "parameters": [
+              "equivalence: temporal overlap"
+            ],
+            "produces": [
+              "disjoint retained windows"
+            ],
+            "summary": "Coalesce overlapping windows"
+          },
+          {
+            "consumes": [
+              "video v",
+              "source boundaries (s, e)"
+            ],
+            "description": "Materialize each retained source interval as a standalone clip while preserving its source offset.",
+            "evidence": [
+              "materializedClip",
+              "retainedFraction"
+            ],
+            "id": "view",
+            "knownAfter": [
+              "Three 60-second clips with source offsets"
+            ],
+            "knownBefore": [
+              "Three retained source-time windows"
+            ],
+            "operator": "View",
+            "parameters": [
+              "retained video: 6.67%"
+            ],
+            "produces": [
+              "materialized clips v_c"
+            ],
+            "summary": "Materialize the retained intervals"
+          },
+          {
+            "consumes": [
+              "materialized clips v_c",
+              "event description p"
+            ],
+            "description": "Apply the same video goal localizer used by the baseline independently to each materialized clip.",
+            "evidence": [
+              "materializedClip",
+              "retainedFraction",
+              "predictions"
+            ],
+            "id": "video-localize",
+            "knownAfter": [
+              "Three clip-level predicted goals"
+            ],
+            "knownBefore": [
+              "Three candidate clips",
+              "goal description"
+            ],
+            "operator": "Video localize",
+            "parameters": [
+              "semantic function: localize\u1d20",
+              "video extent: 6.67%"
+            ],
+            "produces": [
+              "clip-relative goal timestamps E_c"
+            ],
+            "summary": "Run the MLLM on each clip"
+          },
+          {
+            "consumes": [
+              "clip-relative goals E_c",
+              "clip source offsets"
+            ],
+            "description": "Translate each clip-relative prediction back to its match-half source time and combine the results.",
+            "evidence": [
+              "outputRecords"
+            ],
+            "id": "reconcile",
+            "knownAfter": [
+              "Final goal relation in source time"
+            ],
+            "knownBefore": [
+              "Clip-relative predictions",
+              "three source offsets"
+            ],
+            "operator": "Reconcile",
+            "parameters": [
+              "mapping: source time = clip time + associated offset"
+            ],
+            "produces": [
+              "source-time goal collection E"
+            ],
+            "summary": "Return source-time goals"
+          }
+        ],
+        "videoFraction": 0.06666659259267489
+      }
+    },
+    "query": {
+      "id": "goal_scored",
+      "text": "Find every source-time timestamp at which a goal is scored in the match half."
+    },
+    "referenceEvents": [
+      {
+        "eventKind": "point",
+        "timeSeconds": 977.76
+      },
+      {
+        "eventKind": "point",
+        "timeSeconds": 1280.902
+      },
+      {
+        "eventKind": "point",
+        "timeSeconds": 2110.559
+      }
+    ],
+    "source": {
+      "durationSeconds": 2700.003,
+      "id": "england_epl/2015-2016/2015-09-12 - 14-45 Everton 3 - 1 Chelsea::half_1",
+      "media": {
+        "kind": "unavailable",
+        "reason": "SoccerNet broadcast media is not redistributed in this public demo."
+      },
+      "sha256": "e4cac227fdf68daba79250458ae3d999e75c1fd861cd8a337a595671642c6b70",
+      "title": "Everton 3\u20131 Chelsea \u00b7 first half"
+    },
+    "transcriptSegments": [
+      {
+        "endSeconds": 949.0,
+        "segmentId": 269,
+        "startSeconds": 944.0,
+        "text": "definitely Matich and Michael not getting in front of the ball, staying behind the ball"
+      },
+      {
+        "endSeconds": 951.0,
+        "segmentId": 270,
+        "startSeconds": 949.0,
+        "text": "even when Chelsea are in possession."
+      },
+      {
+        "endSeconds": 956.0,
+        "segmentId": 271,
+        "startSeconds": 951.0,
+        "text": "It's impressive all the time doing his job, but they're protecting the two centre-halves"
+      },
+      {
+        "endSeconds": 958.0,
+        "segmentId": 272,
+        "startSeconds": 956.0,
+        "text": "and allowing the four up front to really go and play."
+      },
+      {
+        "endSeconds": 962.0,
+        "segmentId": 273,
+        "startSeconds": 958.0,
+        "text": "And we also saw the benefit there Glenn McGoldy with the decent first touch,"
+      },
+      {
+        "endSeconds": 964.0,
+        "segmentId": 274,
+        "startSeconds": 962.0,
+        "text": "that was Fisback in Roslit to Tim Howard."
+      },
+      {
+        "endSeconds": 966.0,
+        "segmentId": 275,
+        "startSeconds": 965.0,
+        "text": "Here's Galloway."
+      },
+      {
+        "endSeconds": 978.0,
+        "segmentId": 276,
+        "startSeconds": 972.0,
+        "text": "Now Naismith, good skill to get away from Matich and then Galloway and Everton are looking on the door here."
+      },
+      {
+        "endSeconds": 983.0,
+        "segmentId": 277,
+        "startSeconds": 978.0,
+        "text": "And Naismith has come off the fence to score the opening goal against Chelsea,"
+      },
+      {
+        "endSeconds": 986.0,
+        "segmentId": 278,
+        "startSeconds": 983.0,
+        "text": "just so out to Chelsea, Maria, the only sees and troubles."
+      },
+      {
+        "endSeconds": 996.0,
+        "segmentId": 279,
+        "startSeconds": 993.0,
+        "text": "Well for a lad at his side, he doesn't half-win some headers."
+      },
+      {
+        "endSeconds": 1001.0,
+        "segmentId": 280,
+        "startSeconds": 996.0,
+        "text": "And there's another one to go on his tally, fantastic play down the left-hand side again."
+      },
+      {
+        "endSeconds": 1006.0,
+        "segmentId": 281,
+        "startSeconds": 1001.0,
+        "text": "You mentioned him earlier, Brendan Galloway, he's given Chelsea something to think about now,"
+      },
+      {
+        "endSeconds": 1009.0,
+        "segmentId": 282,
+        "startSeconds": 1006.0,
+        "text": "he's rather than Naismith, they've finished with Naismith, good turn,"
+      },
+      {
+        "endSeconds": 1250.0,
+        "segmentId": 338,
+        "startSeconds": 1248.0,
+        "text": "the last time we saw him on the BT Sport."
+      },
+      {
+        "endSeconds": 1254.0,
+        "segmentId": 339,
+        "startSeconds": 1251.0,
+        "text": "There you go, Costa just leaving that little bit on Brendan Galloway."
+      },
+      {
+        "endSeconds": 1258.0,
+        "segmentId": 340,
+        "startSeconds": 1254.0,
+        "text": "Yeah, and a little bit of an air passion as well for the assistant linesman,"
+      },
+      {
+        "endSeconds": 1261.0,
+        "segmentId": 341,
+        "startSeconds": 1259.0,
+        "text": "from that distance was probably quite frightening for him,"
+      },
+      {
+        "endSeconds": 1264.0,
+        "segmentId": 342,
+        "startSeconds": 1261.0,
+        "text": "but he's got that end of his knee, he's got that real nasty streak in him,"
+      },
+      {
+        "endSeconds": 1266.0,
+        "segmentId": 343,
+        "startSeconds": 1264.0,
+        "text": "Costa, that's what makes him tick."
+      },
+      {
+        "endSeconds": 1268.0,
+        "segmentId": 344,
+        "startSeconds": 1266.0,
+        "text": "Maybe looking for something to get him going again as well,"
+      },
+      {
+        "endSeconds": 1272.0,
+        "segmentId": 345,
+        "startSeconds": 1268.0,
+        "text": "he's only got the one goal this season, in fact he's only scored four times"
+      },
+      {
+        "endSeconds": 1276.0,
+        "segmentId": 346,
+        "startSeconds": 1272.0,
+        "text": "in his last 17 Chelsea appearances back towards the end of January,"
+      },
+      {
+        "endSeconds": 1279.0,
+        "segmentId": 347,
+        "startSeconds": 1276.0,
+        "text": "he was so lethal in the early weeks of last season, Costa."
+      },
+      {
+        "endSeconds": 1283.0,
+        "segmentId": 348,
+        "startSeconds": 1279.0,
+        "text": "Here's Neismith with another one, and Hamilton double the lead"
+      },
+      {
+        "endSeconds": 1286.0,
+        "segmentId": 349,
+        "startSeconds": 1283.0,
+        "text": "and what an introduction, Stephen Neismith's lead."
+      },
+      {
+        "endSeconds": 1290.0,
+        "segmentId": 350,
+        "startSeconds": 1288.0,
+        "text": "CHEERING"
+      },
+      {
+        "endSeconds": 1296.0,
+        "segmentId": 351,
+        "startSeconds": 1294.0,
+        "text": "Well, Chelsea are giving Everton all pines of space,"
+      },
+      {
+        "endSeconds": 1299.0,
+        "segmentId": 352,
+        "startSeconds": 1296.0,
+        "text": "and they're running rampant in these last few minutes."
+      },
+      {
+        "endSeconds": 1302.0,
+        "segmentId": 353,
+        "startSeconds": 1299.0,
+        "text": "So, Vanavitch, he's backing off, that's his man."
+      },
+      {
+        "endSeconds": 1304.0,
+        "segmentId": 354,
+        "startSeconds": 1302.0,
+        "text": "Number 14!"
+      },
+      {
+        "endSeconds": 1306.0,
+        "segmentId": 355,
+        "startSeconds": 1304.0,
+        "text": "They take nothing away from Neismith,"
+      },
+      {
+        "endSeconds": 1309.0,
+        "segmentId": 356,
+        "startSeconds": 1306.0,
+        "text": "he gets the ball in a bit of space, opens himself up"
+      },
+      {
+        "endSeconds": 1311.0,
+        "segmentId": 357,
+        "startSeconds": 1309.0,
+        "text": "and thumps it with his left foot."
+      },
+      {
+        "endSeconds": 2094.0,
+        "segmentId": 567,
+        "startSeconds": 2089.0,
+        "text": "Petro is back on the right side now, having had a go on the left against Coleman for a while."
+      },
+      {
+        "endSeconds": 2096.0,
+        "segmentId": 568,
+        "startSeconds": 2094.0,
+        "text": "He's back out here against Brendan Galloway."
+      },
+      {
+        "endSeconds": 2098.0,
+        "segmentId": 569,
+        "startSeconds": 2096.0,
+        "text": "PENALTY"
+      },
+      {
+        "endSeconds": 2108.0,
+        "segmentId": 570,
+        "startSeconds": 2102.0,
+        "text": "Vanovic, Petro, Miquel, Matic."
+      },
+      {
+        "endSeconds": 2112.0,
+        "segmentId": 571,
+        "startSeconds": 2109.0,
+        "text": "Matic is going to try. Look here, and he hits an absolute beauty!"
+      },
+      {
+        "endSeconds": 2116.0,
+        "segmentId": 572,
+        "startSeconds": 2112.0,
+        "text": "What a strike from Matic! And Chelsea back in it."
+      },
+      {
+        "endSeconds": 2121.0,
+        "segmentId": 573,
+        "startSeconds": 2119.0,
+        "text": "Wow, it's a thunderball from Matic."
+      },
+      {
+        "endSeconds": 2125.0,
+        "segmentId": 574,
+        "startSeconds": 2121.0,
+        "text": "As soon as it left this foot, it was arrowing into that top corner."
+      },
+      {
+        "endSeconds": 2129.0,
+        "segmentId": 575,
+        "startSeconds": 2126.0,
+        "text": "And that gets him back in it. It's a simple throw in."
+      },
+      {
+        "endSeconds": 2134.0,
+        "segmentId": 576,
+        "startSeconds": 2129.0,
+        "text": "Not much pressure on the ball, but it's 30-35 yards out, but he hits it so well."
+      },
+      {
+        "endSeconds": 2137.0,
+        "segmentId": 577,
+        "startSeconds": 2134.0,
+        "text": "You can just see the flight of the ball."
+      },
+      {
+        "endSeconds": 2141.0,
+        "segmentId": 578,
+        "startSeconds": 2137.0,
+        "text": "It's hardly spinning or anything. It's just purely struck from Matic."
+      },
+      {
+        "endSeconds": 2143.0,
+        "segmentId": 579,
+        "startSeconds": 2141.0,
+        "text": "Thumping finish."
+      }
+    ]
+  }
+}

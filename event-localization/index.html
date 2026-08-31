@@ -9,8 +9,8 @@
     />
     <meta name="repository" content="concord-db/demo" />
     <title>Concord · Cross-Modal Event Localization</title>
-    <link rel="stylesheet" href="./styles.css?v=6" />
-    <script type="module" src="./app.js?v=5"></script>
+    <link rel="stylesheet" href="./styles.css?v=7" />
+    <script type="module" src="./app.js?v=6"></script>
   </head>
   <body>
     <header class="site-header">
@@ -33,7 +33,7 @@
         <p class="hero-copy">
           See how Concord substitutes a source-aligned transcript for video—or
           uses the transcript to restrict expensive video inference to a small
-          fraction of the original lecture duration.
+          fraction of the original video duration.
         </p>
         <div class="hero-actions">
           <a class="button button-primary" href="#demo">Explore the replay</a>
@@ -52,13 +52,15 @@
       <section class="demo-section" id="demo">
         <div class="shell">
           <div class="section-kicker">O1 + O2 · Cross-modal rewrites</div>
+          <div class="example-selector" role="tablist" aria-label="Localization example">
+            <span>Example</span>
+            <button id="example-lecture" role="tab" aria-selected="true" data-example="lecture" type="button">Lecture</button>
+            <button id="example-soccer" role="tab" aria-selected="false" data-example="soccer" type="button">Soccer</button>
+          </div>
           <div class="section-heading">
             <div>
-              <h2>Lecture event localization</h2>
-              <p>
-                Find every interval where the lecturer creates a large, intact
-                soap bubble that remains visible until it ruptures.
-              </p>
+              <h2 id="example-title">Event localization</h2>
+              <p id="example-query">Loading example…</p>
             </div>
           </div>
 
@@ -77,11 +79,11 @@
           <article class="plan-card" id="plan-panel" role="tabpanel" aria-labelledby="tab-o2">
             <div class="expression-row">
               <span>VRA</span>
-              <code id="plan-expression">Loading recorded query…</code>
+              <code id="plan-expression">Loading query…</code>
             </div>
             <div class="execution-toolbar">
               <div>
-                <span class="inspector-label">Recorded operator execution</span>
+                <span class="inspector-label">Operator execution</span>
                 <strong id="execution-status" aria-live="polite">Ready to run</strong>
               </div>
               <div class="stage-controls">
@@ -96,23 +98,23 @@
 
       <section class="results-section shell" id="results">
         <div class="section-kicker">Published evaluation · Table 2</div>
-        <h2>Less video, better localization</h2>
+        <h2 id="results-title">Less video, better localization</h2>
         <p class="results-intro">
           Values below are frozen aggregate results over
           <strong id="evaluation-scope">the evaluated lecture workload</strong>,
-          not measurements recomputed from the single Lecture 20 trace above.
+          not measurements recomputed from <span id="trace-scope">the trace above</span>.
         </p>
 
         <div class="metric-spotlight">
-          <article><span>Video processed</span><strong id="metric-video">—</strong><small>O2 lecture query</small></article>
-          <article><span>Candidate recall</span><strong id="metric-recall">—</strong><small>4 of 4 events covered</small></article>
+          <article><span>Video processed</span><strong id="metric-video">—</strong><small id="metric-video-note">O2 query</small></article>
+          <article><span>Candidate recall</span><strong id="metric-recall">—</strong><small id="metric-recall-note">—</small></article>
           <article><span>MLLM cost</span><strong id="metric-cost">—</strong><small>relative to video-only</small></article>
-          <article><span>F1 score</span><strong id="metric-f1">—</strong><small>at tIoU ≥ .3</small></article>
+          <article><span>F1 score</span><strong id="metric-f1">—</strong><small id="metric-f1-note">—</small></article>
         </div>
 
         <div class="table-wrap">
           <table>
-            <caption>Lecture event-localization results at the primary tIoU threshold.</caption>
+            <caption id="results-caption">Event-localization results.</caption>
             <thead><tr><th>Query</th><th>Video</th><th>Precision</th><th>Recall</th><th>F1</th><th>MLLM tokens</th><th>Cost</th><th>Time</th></tr></thead>
             <tbody id="results-body"></tbody>
           </table>

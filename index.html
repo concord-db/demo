@@ -31,7 +31,7 @@
         <p class="hero-copy">
           Concord treats video as a relation, so a query optimizer can rewrite
           across modalities instead of feeding whole videos to a model. Each demo
-          below is a deterministic replay of a recorded execution — no API key is
+          below exposes evaluated operator outputs step by step—no API key is
           required.
         </p>
         <div class="hero-actions">
@@ -41,25 +41,24 @@
       </section>
 
       <section class="demos shell" id="demos">
-        <div class="section-kicker">Recorded case studies</div>
+        <div class="section-kicker">Evaluated case studies</div>
         <h2>Pick a query to explore</h2>
 
         <div class="demo-grid">
           <article class="demo-card">
             <div class="demo-card-body">
               <span class="demo-tag">O1 + O2 · Modality substitution &amp; temporal pushdown</span>
-              <h3>Lecture event localization</h3>
+              <h3>Event localization</h3>
               <p>
-                Find every interval where a lecturer creates a large, intact soap
-                bubble that survives until it ruptures. Compare the video-only
-                baseline against a transcript-only rewrite and a transcript-guided
-                rewrite that sends only 130 seconds of an 82-minute lecture to the
-                model.
+                Explore lecture demonstrations and soccer goals through the same
+                video-only baseline, transcript-only rewrite, and transcript-guided
+                rewrite. Inspect how each operator transforms the source into
+                localized intervals or timestamps.
               </p>
               <dl class="demo-stats">
-                <div><dt>Video processed</dt><dd>2.5%</dd></div>
-                <div><dt>F1 at tIoU ≥ .3</dt><dd>0.89</dd></div>
-                <div><dt>Source</dt><dd>MIT 8.03</dd></div>
+                <div><dt>Examples</dt><dd>Lecture + soccer</dd></div>
+                <div><dt>Alternatives</dt><dd>Baseline, O1, O2</dd></div>
+                <div><dt>Output</dt><dd>Intervals + points</dd></div>
               </dl>
             </div>
             <a class="button button-primary demo-cta" href="./event-localization/">
