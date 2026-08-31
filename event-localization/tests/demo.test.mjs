@@ -178,6 +178,7 @@ test("page exposes accessible query tabs and execution controls", async () => {
   assert.match(html, /id="run-next-stage"/);
   assert.match(html, /id="reset-plan"/);
   assert.match(html, /id="operator-trace"/);
+  assert.equal(html.includes("recorded-badge"), false);
   assert.match(html, /styles\.css\?v=6/);
   assert.match(html, /app\.js\?v=5/);
   assert.match(css, /\.artifact-heading > div\s*\{[^}]*display:\s*flex;[^}]*flex-direction:\s*column;[^}]*gap:\s*4px;/);

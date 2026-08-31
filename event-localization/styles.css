@@ -84,7 +84,6 @@ h1 em { color: var(--accent); font-family: Georgia, "Times New Roman", serif; fo
 .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin: 10px 0 32px; }
 h2 { margin-bottom: 10px; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.06; letter-spacing: -.045em; }
 .section-heading p, .results-intro { max-width: 680px; margin-bottom: 0; color: var(--muted); }
-.recorded-badge { flex: 0 0 auto; padding: 7px 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--accent-2); font-size: .78rem; }
 
 .plan-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
 .plan-tabs button {
